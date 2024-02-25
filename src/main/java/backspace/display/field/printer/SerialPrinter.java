@@ -3,17 +3,12 @@ package backspace.display.field.printer;
 import backspace.display.field.Frame;
 import jssc.SerialPort;
 import jssc.SerialPortException;
-import jssc.SerialPortList;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.io.File;
-import java.nio.file.Files;
 import java.util.Random;
 import java.util.StringJoiner;
 
@@ -26,7 +21,6 @@ public class SerialPrinter implements FieldPrinter {
     private final Integer blockCount;
 
     private final Integer blockSize;
-
 
 
     private static final int MAX_BUFFER_SIZE = 600;
@@ -54,7 +48,7 @@ public class SerialPrinter implements FieldPrinter {
             @Value("${display.block.count}") Integer blockCount,
             @Value("${display.block.size}") Integer blockSize) {
         this(findPort(), baudRate, dataBits, stopBits, parity, blockCount, blockSize);
-        }
+    }
 
     @SneakyThrows
     public void selectPort(String portName) {
@@ -72,12 +66,12 @@ public class SerialPrinter implements FieldPrinter {
 
     private static String findPort() {
         File[] portNames = new File("/dev/serial/by-id").listFiles();
-        if (portNames!=null && portNames.length == 1) {
+        if (portNames != null && portNames.length == 1) {
             log.info("USB device found: " + portNames[0]);
             return portNames[0].getAbsolutePath();
         } else {
             StringBuilder errorMessage = new StringBuilder();
-            if (portNames!=null && portNames.length>1){
+            if (portNames != null && portNames.length > 1) {
                 errorMessage.append("Multiple USB devices found: ");
                 StringJoiner joiner = new StringJoiner(", ");
                 for (File portName : portNames) {
@@ -93,16 +87,17 @@ public class SerialPrinter implements FieldPrinter {
     }
 
     Random random = new Random();
+
     @SneakyThrows
     @Override
     public synchronized void printField(Frame frame) {
-        if (isBufferQueued()){
+        if (isBufferQueued()) {
             throw new IllegalStateException("Buffer is full");
         }
         byte[][] bits = new byte[blockCount][blockSize];
         for (int width = 0; width < 40; width++) {
             for (int height = 0; height < 32; height++) {
-                Point point = new Point(width , height);
+                Point point = new Point(width, height);
                 byte brightness = frame.getPixelBrightness(point);
                 int x_bit = 7 - width % 8;
                 int y_byte = height % 16;
@@ -140,7 +135,7 @@ public class SerialPrinter implements FieldPrinter {
         serialPort.writeByte((byte) 0x00);
     }
 
-    public boolean isBufferQueued(){
+    public boolean isBufferQueued() {
         try {
             return serialPort.getOutputBufferBytesCount() > MAX_BUFFER_SIZE;
         } catch (SerialPortException e) {
@@ -148,7 +143,6 @@ public class SerialPrinter implements FieldPrinter {
             return false;
         }
     }
-
 
 
 }

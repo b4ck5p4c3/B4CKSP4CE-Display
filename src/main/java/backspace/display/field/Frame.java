@@ -8,7 +8,7 @@ import java.awt.*;
 
 @Data
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Frame implements Identifiable, Cloneable{
+public class Frame implements Identifiable, Cloneable {
 
     private String id;
 
@@ -58,7 +58,7 @@ public class Frame implements Identifiable, Cloneable{
         return pixelsBrightnesses[y][x];
     }
 
-    public void crop(int width, int height){
+    public void crop(int width, int height) {
         if (width < 0 || height < 0) {
             throw new IllegalArgumentException("Size of field must be positive");
         }
@@ -91,7 +91,7 @@ public class Frame implements Identifiable, Cloneable{
         StringBuffer sb = new StringBuffer();
         for (int y = 0; y < height(); y++) {
             for (int x = 0; x < width(); x++) {
-                sb.append(getPixelBrightness(x,y) == 0 ? "0 " : "X ");
+                sb.append(getPixelBrightness(x, y) == 0 ? "0 " : "X ");
             }
             sb.append("\n");
         }
@@ -126,7 +126,7 @@ public class Frame implements Identifiable, Cloneable{
 
     }
 
-    public void print(){
+    public void print() {
         System.out.println(fieldToString());
     }
 

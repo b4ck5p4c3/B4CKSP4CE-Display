@@ -57,22 +57,21 @@ public abstract class Display {
         showStats();
     }
 
-    private void showStats(){
+    private void showStats() {
         long last = lastUpdate.get();
         long now = System.currentTimeMillis();
         long diff = now - last;
-        if (diff > 1000){
+        if (diff > 1000) {
             lastUpdate.set(now);
             log.info("Updates: success {}, failed: {}, loses: {}%, time: {} ms",
                     successfulUpdates.get(),
                     failedUpdates.get(),
-                    (float) failedUpdates.get()/(successfulUpdates.get() + failedUpdates.get())*100,
+                    (float) failedUpdates.get() / (successfulUpdates.get() + failedUpdates.get()) * 100,
                     diff);
             successfulUpdates.set(0);
             failedUpdates.set(0);
         }
     }
-
 
 
 }

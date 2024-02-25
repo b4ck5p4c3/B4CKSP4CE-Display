@@ -33,7 +33,6 @@ public class FrameService {
     }
 
 
-
     public void setActiveFrameById(String frameId) {
         Frame frame = getFrameById(frameId);
         activeDisplay.setFrame(frame);

@@ -27,30 +27,26 @@ public class ModelMapperConfigurator {
         return context -> ByteBase64MappingUtils.bytesListToBase64Converter(context.getSource());
     }
 
-    private void frameCreationRequestMapper(ModelMapper modelMapper){
+    private void frameCreationRequestMapper(ModelMapper modelMapper) {
         TypeMap<FrameCreationRequestDto, FrameCreationRequest> typeMap =
                 modelMapper.createTypeMap(FrameCreationRequestDto.class, FrameCreationRequest.class);
         typeMap.addMappings(mapper -> mapper.using(base64ToBytesListConverter())
                 .map(FrameCreationRequestDto::getPixelsBrightnesses, FrameCreationRequest::setFrameBytes));
     }
 
-    private void frameToDtoMapper(ModelMapper modelMapper){
+    private void frameToDtoMapper(ModelMapper modelMapper) {
         TypeMap<Frame, FrameDto> typeMap =
                 modelMapper.createTypeMap(Frame.class, FrameDto.class);
         typeMap.addMappings(mapper -> mapper.using(bytesToBase64())
                 .map(Frame::getPixelsBrightnesses, FrameDto::setPixelsBrightnesses));
     }
-    
-    private void fieldUpdateDataMapper(ModelMapper modelMapper){
+
+    private void fieldUpdateDataMapper(ModelMapper modelMapper) {
         TypeMap<LiveFrameUpdateRequestBase64, LiveFrameUpdateRequest> typeMap =
                 modelMapper.createTypeMap(LiveFrameUpdateRequestBase64.class, LiveFrameUpdateRequest.class);
         typeMap.addMappings(mapper -> mapper.using(base64ToBytesListConverter())
                 .map(LiveFrameUpdateRequestBase64::getPixelsBrightnesses, LiveFrameUpdateRequest::setPixelsBrightnesses));
     }
-
-
-
-
 
 
     @Bean
@@ -61,8 +57,6 @@ public class ModelMapperConfigurator {
         fieldUpdateDataMapper(modelMapper);
         return modelMapper;
     }
-
-
 
 
 }

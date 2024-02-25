@@ -14,8 +14,6 @@ public class FrameToDbDtoMapper {
     private final static Base64.Decoder base64Decoder = Base64.getDecoder();
 
 
-
-
     public static FrameDbDto frameToDbDtoConverter(Frame frame) {
         FrameDbDto frameDbDto = new FrameDbDto();
         frameDbDto.setId(frame.getId());

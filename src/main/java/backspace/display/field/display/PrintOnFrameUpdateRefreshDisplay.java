@@ -5,7 +5,7 @@ import backspace.display.field.printer.FieldPrinter;
 import backspace.display.field.writer.FieldWriter;
 import backspace.display.service.config.DisplayConfig;
 
-public class PrintOnFrameUpdateRefreshDisplay extends Display{
+public class PrintOnFrameUpdateRefreshDisplay extends Display {
 
     private boolean isStarted = false;
 
@@ -22,7 +22,7 @@ public class PrintOnFrameUpdateRefreshDisplay extends Display{
     @Override
     public void setFrame(Frame frame) {
         super.setFrame(frame);
-        if(isStarted){
+        if (isStarted) {
             tick();
         }
     }

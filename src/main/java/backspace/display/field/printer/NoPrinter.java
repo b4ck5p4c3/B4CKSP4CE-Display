@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @ConditionalOnProperty(name = "display.printer", havingValue = "none")
 @Component
-public class NoPrinter implements FieldPrinter{
+public class NoPrinter implements FieldPrinter {
     @Override
     public void printField(Frame frame) {
     }
