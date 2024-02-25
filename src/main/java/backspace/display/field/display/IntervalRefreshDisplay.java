@@ -23,6 +23,8 @@ public class IntervalRefreshDisplay extends Display {
     }
 
 
+
+
     public void start() {
         executor.scheduleAtFixedRate(this::tick, 0, interval.toMillis(), java.util.concurrent.TimeUnit.MILLISECONDS);
     }

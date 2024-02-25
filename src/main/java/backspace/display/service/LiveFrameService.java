@@ -13,6 +13,7 @@ public class LiveFrameService {
 
     public void updateFrame(LiveFrameUpdateRequest liveFrameUpdateRequest) {
         Frame frame = new Frame(liveFrameUpdateRequest.getPixelsBrightnesses());
+        display.activate();
         display.setFrame(frame);
     }
 

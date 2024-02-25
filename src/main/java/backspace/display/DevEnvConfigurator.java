@@ -17,12 +17,8 @@ import org.springframework.context.annotation.Profile;
 public class DevEnvConfigurator {
 
     Display display;
+    DisplayConfig displayConfig;
 
-    @Bean
-    @ConditionalOnProperty(name = "display.rendering.type", havingValue = "interval")
-    public Display intervalRefreshDisplay(@Value("${display.rendering.intervalMs}") Long interval, FieldWriter fieldWriter, FieldPrinter fieldPrinter, DisplayConfig displayConfig) {
-        display = new PrintOnFrameUpdateRefreshDisplay(new Frame(32, 40), fieldWriter, fieldPrinter, displayConfig);
-        return display;
-    }
+
 
 }

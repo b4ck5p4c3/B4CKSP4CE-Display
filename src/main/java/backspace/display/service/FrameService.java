@@ -3,8 +3,8 @@ package backspace.display.service;
 import backspace.display.field.Frame;
 import backspace.display.field.display.Display;
 import backspace.display.service.repo.Repository;
-import backspace.display.service.repo.frame.FrameDbDto;
-import backspace.display.service.repo.frame.FrameToDbDtoMapper;
+import backspace.display.service.frame.FrameDbDto;
+import backspace.display.service.frame.FrameToDbDtoMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +17,7 @@ public class FrameService {
 
 
     private Repository<FrameDbDto> frameRepository;
-    private Display activeDisplay;
+    private Display display;
 
 
     public Frame createFrame(FrameCreationRequest frameCreationRequest) {
@@ -33,9 +33,15 @@ public class FrameService {
     }
 
 
+
     public void setActiveFrameById(String frameId) {
         Frame frame = getFrameById(frameId);
-        activeDisplay.setFrame(frame);
+        setActiveFrame(frame);
+    }
+
+    private void setActiveFrame(Frame frame) {
+        display.activate();
+        display.setFrame(frame);
     }
 
     public Frame saveFrame(Frame frame) {
@@ -51,7 +57,7 @@ public class FrameService {
     }
 
     public Frame getActiveFrame() {
-        return activeDisplay.getFrame();
+        return display.getFrame();
     }
 
     public List<Frame> getAllFrames() {
@@ -67,8 +73,8 @@ public class FrameService {
         frame.setDescription(frameCreationRequest.getDescription());
         frame.setPixelsBrightnesses(frameCreationRequest.getFrameBytes());
         Frame newFrame = saveFrame(frame);
-        if (activeDisplay.getFrame().getId().equals(frameId))
-            activeDisplay.setFrame(newFrame);
+        if (display.getFrame().getId().equals(frameId))
+            setActiveFrame(newFrame);
         return newFrame;
     }
 

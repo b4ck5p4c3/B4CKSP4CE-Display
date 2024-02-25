@@ -14,8 +14,8 @@ public class LiveBroker {
 
     private final LiveFrameService liveFrameService;
     private final ModelMapper modelMapper;
-
-
+    
+    
     @MessageMapping("/frame/update")
     public void updateField(LiveFrameUpdateRequestBase64 frameUpdateRequestBase64) {
         LiveFrameUpdateRequest liveFrameUpdateRequest = modelMapper.map(frameUpdateRequestBase64, LiveFrameUpdateRequest.class);
