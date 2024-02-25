@@ -8,7 +8,7 @@
   };
   const backend = {
     autoSaveMinInterval: 30,
-    baseUrl: 'http://127.0.0.1:8080',
+    baseUrl: window.location.origin,
     frame: {
       get: (offset, limit, title) => `${backend.baseUrl}/frame?offset=${offset}&limit=${limit}&title=${title}`,
       create:(activate) => `${backend.baseUrl}/frame?activate=${activate}`,

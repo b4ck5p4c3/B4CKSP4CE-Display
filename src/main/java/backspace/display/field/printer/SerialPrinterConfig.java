@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class SerialPrinterConfig {
 
     @Bean
-    @ConditionalOnProperty(name = "display.printer.serial.port")
+    @ConditionalOnProperty(name = "display.printer.serial.port", matchIfMissing = true)
     public SerialPrinter serialPrinterWithPort(@Value("${display.printer.serial.port}") String portName,
                                                @Value("${display.printer.serial.baudRate}") Integer baudRate,
                                                @Value("${display.printer.serial.dataBits}") Integer dataBits,
@@ -18,18 +18,12 @@ public class SerialPrinterConfig {
                                                @Value("${display.printer.serial.parity}") Integer parity,
                                                @Value("${display.block.count}") Integer blockCount,
                                                @Value("${display.block.size}") Integer blockSize) {
-        return new SerialPrinter(portName, baudRate, dataBits, stopBits, parity, blockCount, blockSize);
+        if (portName==null){
+            return new SerialPrinter(baudRate, dataBits, stopBits, parity, blockCount, blockSize);
+        } else {
+            return new SerialPrinter(portName, baudRate, dataBits, stopBits, parity, blockCount, blockSize);
+        }
     }
 
-    @Bean
-    @ConditionalOnProperty(name = "display.printer.serial.port", matchIfMissing = true)
-    public SerialPrinter serialPrinterWithoutPort(@Value("${display.printer.serial.baudRate}") Integer baudRate,
-                                                  @Value("${display.printer.serial.dataBits}") Integer dataBits,
-                                                  @Value("${display.printer.serial.stopBits}") Integer stopBits,
-                                                  @Value("${display.printer.serial.parity}") Integer parity,
-                                                  @Value("${display.block.count}") Integer blockCount,
-                                                  @Value("${display.block.size}") Integer blockSize) {
-        return new SerialPrinter(baudRate, dataBits, stopBits, parity, blockCount, blockSize);
-    }
 
 }

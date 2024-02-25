@@ -362,7 +362,7 @@ function colorCircle() {
 }
 
 const wsEndpoints = {
-    ws: 'http://127.0.0.1:8080/ws',
+    ws:  window.location.origin+"/ws",
     update: '/frame/update'
 }
 

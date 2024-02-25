@@ -1107,7 +1107,7 @@ SNAKE.Board = SNAKE.Board || (function() {
 
 
 const wsEndpoints = {
-    ws: 'http://127.0.0.1:8080/ws',
+    ws:  window.location.origin+"/ws",
     update: '/frame/update'
 }
 const minWsInterval = 1000 / 75;
@@ -1149,7 +1149,7 @@ function bytesArrayToBase64(bytesArrays) {
 
 
 
-var socket = new SockJS('http://127.0.0.1:8080/ws');
+var socket = new SockJS( window.location.origin+"/ws");
 import {Stomp} from '@stomp/stompjs';
 
 var stompClient = Stomp.over(socket);
