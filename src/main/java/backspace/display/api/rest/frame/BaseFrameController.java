@@ -1,8 +1,8 @@
 package backspace.display.api.rest.frame;
 
 import backspace.display.field.Frame;
-import backspace.display.service.FrameCreationRequest;
-import backspace.display.service.FrameService;
+import backspace.display.service.frame.FrameCreationRequest;
+import backspace.display.service.frame.FrameService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/frame")
+@RequestMapping("api/frame")
 public class BaseFrameController {
 
     private FrameService frameController;
@@ -35,9 +35,10 @@ public class BaseFrameController {
     public FrameDto getFrameById(@PathVariable("frameId") String frameId) {
         return modelMapper.map(frameController.getFrameById(frameId), FrameDto.class);
     }
+
     @PutMapping("/{frameId}")
     public synchronized FrameDto updateFrame(@PathVariable("frameId") String frameId,
-                            @RequestBody FrameCreationRequestDto frameCreationRequestDto) {
+                                             @RequestBody FrameCreationRequestDto frameCreationRequestDto) {
         Frame frame = frameController.updateFrame(frameId, modelMapper.map(frameCreationRequestDto, FrameCreationRequest.class));
         return modelMapper.map(frame, FrameDto.class);
     }
@@ -46,7 +47,7 @@ public class BaseFrameController {
     public void deleteFrame(@PathVariable("frameId") String frameId) {
         frameController.deleteFrame(frameId);
     }
-    
+
     @GetMapping
     public List<FrameDto> getAllFrames(@RequestParam(value = "offset", required = false, defaultValue = "0") int offset,
                                        @RequestParam(value = "limit", required = false, defaultValue = "10") int limit,
@@ -59,8 +60,6 @@ public class BaseFrameController {
                 .map(frame -> modelMapper.map(frame, FrameDto.class))
                 .toList();
     }
-
-
 
 
 }

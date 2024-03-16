@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>admin-panel</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bricks.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.46.0/min/vs/editor/editor.main.min.css">
+    <link rel="stylesheet" href="assets/css/scripts.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body>
+    <div class="container-fluid" style="--bs-light: #ffffff;--bs-light-rgb: 255,255,255;">
+        <div class="row flex-column flex-sm-row wrapper min-vh-100">
+            <div class="col-12 col-sm-1 col-md-3 col-xl-1 flex-shrink-1 p-0 bg-dark">
+                <nav class="navbar navbar-expand-sm bg-dark text-nowrap flex-row align-items-start flex-sm-column navbar-dark">
+                    <div class="container flex-sm-column"><a class="navbar-brand" href="#"><i class="fa fa-braille fa-2x text-warning"></i></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navcol-1">
+                            <ul class="navbar-nav flex-column justify-content-between w-100">
+                                <li class="nav-item" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="right" title="Overview"><a class="nav-link" href="/index.html"><i class="fa fa-home me-2 text-info"></i><span class="d-inline-block d-sm-none d-md-inline-block">Frames</span></a></li>
+                                <li class="nav-item" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="right" title="Properties" hidden=""><a class="nav-link" href="#"><i class="fa fa-gear me-2 text-info"></i><span class="d-inline-block d-sm-none d-md-inline-block">Props</span></a></li>
+                                <li class="nav-item" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="right" title="Properties"><a class="nav-link" href="bricknballs.html"><i class="fa fa-circle me-2 text-info"></i><span class="d-inline-block d-sm-none d-md-inline-block">Bricks</span></a></li>
+                                <li class="nav-item" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="right" title="Properties"><a class="nav-link" href="snake.html"><i class="fa fa-ellipsis-v me-2 text-info" style="padding-left: 5px;"></i><span class="d-inline-block d-sm-none d-md-inline-block" style="padding-left: 5px;;">Snake</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-12 col-sm-11 col-md-9 col-xl-9 bg-light py-3" style="background: var(--bs-body-bg);">
+                <div class="row">
+                    <div class="col" style="margin-bottom: 20px;">
+                        <div class="input-group" style="width: 60%;min-width: 200px;margin-bottom: 10px;"><span class="input-group-text">Name</span><input class="form-control" type="text" id="newScriptName"></div>
+                        <div class="input-group" style="width: 90%;min-width: 200px;margin-bottom: 10px;"><span class="input-group-text">Description</span><input class="form-control" type="text" id="newScriptDescription"></div>
+                        <div class="input-group" style="min-width: 200px;width: 30%;margin-bottom: 10px;"><span class="input-group-text">Run interval (ms)</span><input class="form-control" type="number" id="newScriptRunInterval" min="10" max="2147483646" value="50"></div><button class="btn btn-success" id="addScriptButton" type="button">Add!</button>
+                    </div>
+                </div>
+                <div class="row" style="height: 60%;">
+                    <div class="col">
+                        <div>
+                            <div class="card-group d-inline" id="scriptsContainer">
+                                <div class="card scriptCard" id="scriptCardTemplate" style="border-top-right-radius: 6px;border-bottom-right-radius: 6px;margin-bottom: 20px;" name="scriptCard" tabindex="-1">
+                                    <div class="card-header">
+                                        <ul class="nav nav-tabs card-header-tabs">
+                                            <li class="nav-item">
+                                                <div class="btn-group" role="group" style="border-radius: 0px;" name="controlButtons"><button class="btn btn-primary nav-link active" type="button" style="border-radius: 6px 0px 0px 0px;" name="overviewButton">Overview</button><button class="btn btn-primary" type="button" style="border-radius: 0px 6px 0px 0px;" name="scriptEditorButton">Code</button></div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body" name="overview">
+                                        <div>
+                                            <div class="row">
+                                                <div class="col" style="padding: 2px;max-width: 45px;border-right-width: 1px;border-right-color: gray;"><button class="btn btn-success" type="button" style="margin-bottom: 3px;width: 40px;" name="runScriptButton"><i class="fa fa-play"></i></button><button class="btn btn-secondary disabled" type="button" disabled="" style="margin-bottom: 3px;width: 40px;" name="stopScript" hidden=""><i class="fa fa-stop"></i></button><button class="btn btn-secondary disabled" type="button" disabled="" name="saveScriptButton" style="width: 40px;"><i class="fa fa-save"></i></button></div>
+                                                <div class="col">
+                                                    <div class="row">
+                                                        <div class="col"><input type="text" class="no-borders-input" style="font-size: x-large;width: 100%;" value="{title}" name="title" x-save-trigger="true"></div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col" style="height: 80px;"><textarea class="no-borders-input" x-save-trigger="true" name="description" style="width: 100%;height: 100%;">{description}</textarea></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body" name="codeEditorFrame">
+                                        <div class="d-flex"><button class="btn btn-primary" id="saveCodeButton" type="button" style="margin-right: 8px;" name="saveScriptButton"><i class="fa fa-save"></i>&nbsp;Save</button><button class="btn btn-success" id="runCodeButton" type="button" name="runScriptButton" style="margin-right: 12px;"><i class="fa fa-play"></i>&nbsp;Run</button>
+                                            <div class="input-group" style="max-width: 200px;"><span class="input-group-text">Run interval</span><input class="form-control" type="text" value="{runInterval}" placeholder="Ms" name="runInterval"></div>
+                                        </div>
+                                        <div style="height: 500px;background: var(--bs-body-color);margin-top: 10px;" name="codeEditor"></div>
+                                        <div class="d-block" style="height: 150px;overflow: auto;overflow-y: auto;overflow-x: auto;background: #36454F;" data-bs-spy="scroll" name="stdContainer">
+                                            <p class="font-monospace stdout" name="stdoutWelcome">There will be logs and errors. But now it's empty&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16" class="bi bi-terminal" style="font-size: 17px;">
+                                                    <path d="M6 9a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3A.5.5 0 0 1 6 9M3.854 4.146a.5.5 0 1 0-.708.708L4.793 6.5 3.146 8.146a.5.5 0 1 0 .708.708l2-2a.5.5 0 0 0 0-.708l-2-2z"></path>
+                                                    <path d="M2 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1z"></path>
+                                                </svg></p>
+                                        </div>
+                                    </div><input type="text" name="id" hidden="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/node_modules_monaco-editor_esm_vs_basic-languages_lua_lua_js.bundle.js"></script>
+    <script src="assets/js/basic.js"></script>
+</body>
+
+</html>

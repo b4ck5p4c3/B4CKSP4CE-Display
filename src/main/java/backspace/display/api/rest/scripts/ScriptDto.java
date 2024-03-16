@@ -11,7 +11,6 @@ public class ScriptDto {
     private String id;
     private String name;
     private String description;
-    private List<String> parameters;
     private String script;
     private int runIntervalMs;
 }

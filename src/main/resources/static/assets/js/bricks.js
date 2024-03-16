@@ -123,7 +123,7 @@ function ballMove() {
     ballX += ballSpeedX;
     ballY += ballSpeedY;
     // ballY
-    if (ballY > canvas.height-2) {
+    if (ballY > canvas.height - 2) {
         ballRest();
         brickReset();
     } else if (ballY < 8 && ballSpeedY != 0.0) {
@@ -165,7 +165,7 @@ function ballBrickColl() {
     var collisionDetected = false;
 
     // Проверка столкновения для всех 8 точек
-    [   {x: ballLeft, y: ballY},
+    [{x: ballLeft, y: ballY},
         {x: ballRight, y: ballY},
         {x: ballX, y: ballTop},
         {x: ballX, y: ballBottom}
@@ -204,9 +204,7 @@ function ballBrickColl() {
 }
 
 
-
-
-                    function paddleMove() {
+function paddleMove() {
     // paddle
     var paddleTopEdgeY = canvas.height - PADDLE_DIST_FROM_EDGE;
     var paddleBottomEdgeY = paddleTopEdgeY + PADDLE_THICKNESS;
@@ -226,7 +224,7 @@ function ballBrickColl() {
         ballSpeedX = ballDistFromCenterX * 0.35;
 
         console.log('BrickCount: ' + brickCount);
-        if (brickCount <=0) {
+        if (brickCount <= 0) {
             winnigScreen();
         }
 
@@ -235,34 +233,34 @@ function ballBrickColl() {
 
 function winnigScreen() {
 
-        brickGrid = getNoizeArray(currentNoizeRow, SCREEN_X, SCREEN_Y);
-        if (!winScreenInit) {
-            winScreenInit = true;
-            setInterval(function () {
-                if (currentNoizeRow <= NOIZE_ROWS) {
-                    currentNoizeRow+=1;
-                }
-            }, NOIZE_MOVE_INTERVAL);
-          //  setTimeout(function (){showWinPicture=true}, NOIZE_MOVE_INTERVAL*(NOIZE_ROWS+1));
+    brickGrid = getNoizeArray(currentNoizeRow, SCREEN_X, SCREEN_Y);
+    if (!winScreenInit) {
+        winScreenInit = true;
+        setInterval(function () {
+            if (currentNoizeRow <= NOIZE_ROWS) {
+                currentNoizeRow += 1;
+            }
+        }, NOIZE_MOVE_INTERVAL);
+        //  setTimeout(function (){showWinPicture=true}, NOIZE_MOVE_INTERVAL*(NOIZE_ROWS+1));
 
-        }
-        if (showWinPicture) {
-            printWinPicture(brickGrid);
-        }
-        ballSpeedX = 0;
-        ballSpeedY = 0;
+    }
+    if (showWinPicture) {
+        printWinPicture(brickGrid);
+    }
+    ballSpeedX = 0;
+    ballSpeedY = 0;
 
 }
 
 function printWinPicture(array) {
-    for (var i = NOIZE_ROWS; i > SCREEN_Y-NOIZE_ROWS*2; i--) {
+    for (var i = NOIZE_ROWS; i > SCREEN_Y - NOIZE_ROWS * 2; i--) {
         for (var j = 0; j < SCREEN_X; j++) {
-            array[i][j] = CATGIRL[i-SCREEN_Y][j];
+            array[i][j] = CATGIRL[i - SCREEN_Y][j];
         }
     }
-    for (var y = 0; y< CATGIRL.length; y++) {
+    for (var y = 0; y < CATGIRL.length; y++) {
         for (var x = 0; x < CATGIRL[y].length; x++) {
-            array[y+NOIZE_ROWS][x] = CATGIRL[y][x];
+            array[y + NOIZE_ROWS][x] = CATGIRL[y][x];
         }
     }
 }
@@ -270,10 +268,10 @@ function printWinPicture(array) {
 function getNoizeArray(noizeSize, xSize, ySize) {
 
     var noizeArray = new Array(xSize * ySize);
-    for (var i = 0; i < xSize*noizeSize; i++) {
+    for (var i = 0; i < xSize * noizeSize; i++) {
         noizeArray[i] = Math.random() > NOIZE_FACTOR;
     }
-    for (var i = xSize * ySize; i > xSize * ySize-(xSize*noizeSize); i--) {
+    for (var i = xSize * ySize; i > xSize * ySize - (xSize * noizeSize); i--) {
 
         noizeArray[i] = Math.random() > NOIZE_FACTOR;
     }
@@ -357,12 +355,12 @@ function drawbricks() {
 function colorCircle() {
     canvasContext.fillStyle = 'black';
     canvasContext.beginPath();
-    canvasContext.arc(ballX, ballY, ballRadius+2, 0, Math.PI * 2, true);
+    canvasContext.arc(ballX, ballY, ballRadius + 2, 0, Math.PI * 2, true);
     canvasContext.fill();
 }
 
 const wsEndpoints = {
-    ws:  window.location.origin+"/ws",
+    ws: window.location.origin + "/ws",
     update: '/frame/update'
 }
 
@@ -428,8 +426,6 @@ function updateField(fieldBase64) {
     stompClient.send(wsEndpoints.update, {}, JSON.stringify({'pixelsBrightnesses': fieldBase64}));
     lastWsTime = Date.now();
 }
-
-
 
 
 document.addEventListener('keydown', function (event) {

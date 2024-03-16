@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/script")
+@RequestMapping("api/script")
 @RequiredArgsConstructor
 public class ScriptsController {
 
@@ -20,14 +20,22 @@ public class ScriptsController {
 
 
     @PostMapping("{scriptId}/run")
-    public void runScript(@PathVariable(name = "scriptId") String scriptId) {
+    public ScriptDto runScript(@PathVariable(name = "scriptId") String scriptId) {
         scriptService.runScript(scriptId);
+        return modelMapper.map(scriptService.getActiveScript(), ScriptDto.class);
     }
 
     @PostMapping
     public ScriptDto createScript(@RequestBody ScriptCreationRequestDto request) {
 
         Script script = scriptService.createScript(
+                modelMapper.map(request, ScriptCreationRequest.class));
+        return modelMapper.map(script, ScriptDto.class);
+    }
+
+    @PutMapping("{scriptId}")
+    public ScriptDto updateScript(@RequestBody ScriptCreationRequestDto request, @PathVariable(name = "scriptId") String scriptId) {
+        Script script = scriptService.updateScript(scriptId,
                 modelMapper.map(request, ScriptCreationRequest.class));
         return modelMapper.map(script, ScriptDto.class);
     }
@@ -49,5 +57,11 @@ public class ScriptsController {
         Script script = scriptService.getScriptById(scriptId);
         return modelMapper.map(script, ScriptDto.class);
     }
+
+    @GetMapping("active")
+    public ScriptDto getActiveScript() {
+        return modelMapper.map(scriptService.getActiveScript(), ScriptDto.class);
+    }
+
 
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @ConditionalOnProperty(name = "data.source", havingValue = "none")
 @Component
 @Primary
-public class NoFieldWriter implements FieldWriter{
+public class NoFieldWriter implements FieldWriter {
     @Override
     public void writeToField(Frame frame) {
 

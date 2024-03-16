@@ -35,31 +35,31 @@ public abstract class Display {
         this.displayConfig = displayConfig;
     }
 
-    public void start(){
-        if (!isAnyRunning.compareAndSet(false, true)){
+    public void start() {
+        if (!isAnyRunning.compareAndSet(false, true)) {
             throw new IllegalStateException("Another display is already running");
         }
-        if (!isRunning.compareAndSet(false, true)){
+        if (!isRunning.compareAndSet(false, true)) {
             throw new IllegalStateException("Display is already running");
         }
         runningDisplay = this;
     }
 
-    public void stop(){
-        if (!isRunning.compareAndSet(true, false)){
+    public void stop() {
+        if (!isRunning.compareAndSet(true, false)) {
             throw new IllegalStateException("Display is not running");
         }
-        if (!isAnyRunning.compareAndSet(true, false)){
+        if (!isAnyRunning.compareAndSet(true, false)) {
             throw new IllegalStateException("Illegal state when stopping display. No display is running");
         }
         runningDisplay = null;
     }
 
-    public void activate(){
-        if (runningDisplay == this){
+    public void activate() {
+        if (runningDisplay == this) {
             return;
         }
-        if (runningDisplay != null){
+        if (runningDisplay != null) {
             runningDisplay.stop();
         }
         start();
@@ -95,17 +95,17 @@ public abstract class Display {
         showStats();
     }
 
-    private void showStats(){
+    private void showStats() {
         long last = lastUpdate.get();
         long now = System.currentTimeMillis();
         long diff = now - last;
-        if (diff > 1000){
+        if (diff > 1000) {
             lastUpdate.set(now);
             if (log.isDebugEnabled())
                 log.debug("Updates: success {}, failed: {}, loses: {}%, time: {} ms",
                         sucessfulUpdates.get(),
                         failedUpdates.get(),
-                        (float) failedUpdates.get()/(sucessfulUpdates.get() + failedUpdates.get())*100,
+                        (float) failedUpdates.get() / (sucessfulUpdates.get() + failedUpdates.get()) * 100,
                         diff);
             sucessfulUpdates.set(0);
             failedUpdates.set(0);

@@ -1,0 +1,25 @@
+.stdout {
+  color: #f7f7f7;
+  margin: 0px;
+}
+
+.stderr {
+  margin: 0px;
+  color: orangered;
+}
+
+.parametersTableBody input {
+  width: 100%;
+  border-style: none;
+}
+
+.scriptCard .fa {
+  pointer-events: none;
+}
+
+.no-borders-input {
+  outline: none;
+  border-style: none;
+  resize: none;
+}
+

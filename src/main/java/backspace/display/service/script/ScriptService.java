@@ -1,7 +1,6 @@
 package backspace.display.service.script;
 
-import backspace.display.api.rest.scripts.ScriptCreationRequestDto;
-import backspace.display.field.display.Display;
+import backspace.display.script.QueuedLimitedOutputStream;
 import backspace.display.script.Script;
 import backspace.display.script.ScriptRunnerDisplay;
 import backspace.display.service.repo.Repository;
@@ -14,7 +13,6 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class ScriptService {
-    private final Display currentDisplay;
     private final ScriptRunnerDisplay scriptRunnerDisplay;
 
     private final Repository<Script> scriptRepository;
@@ -27,8 +25,8 @@ public class ScriptService {
     public Script createScript(ScriptCreationRequest scriptCreationRequest) {
         String scriptId = UUID.randomUUID().toString();
         Script script = new Script(scriptId, scriptCreationRequest.getName(), scriptCreationRequest.getDescription(),
-                scriptCreationRequest.getScript(), scriptCreationRequest.getRunIntervalMs(),
-                scriptCreationRequest.getParameters());
+                scriptCreationRequest.getScript(), scriptCreationRequest.getRunIntervalMs()
+                );
         return scriptRepository.add(script);
     }
 
@@ -44,12 +42,32 @@ public class ScriptService {
         return scriptRepository.getAll();
     }
 
+    public Script updateScript(String scriptId, ScriptCreationRequest scriptCreationRequest) {
+        Script script = scriptRepository.getById(scriptId);
+        script.setName(scriptCreationRequest.getName());
+        script.setDescription(scriptCreationRequest.getDescription());
+        script.setScript(scriptCreationRequest.getScript());
+        script.setRunIntervalMs(scriptCreationRequest.getRunIntervalMs());
+        scriptRepository.update(script, script);
+        runScript(scriptId);
+        return script;
+    }
 
 
-
-
-    private void setScript (Script script) {
+    private void setScript(Script script) {
         scriptRunnerDisplay.activate();
+        scriptRunnerDisplay.getFieldWriter().clearStd();
         scriptRunnerDisplay.setScript(script);
+    }
+
+    public List<String> getStdout() {
+        QueuedLimitedOutputStream stdout = scriptRunnerDisplay.getFieldWriter().getStdout();
+        return stdout.getLinesAndErase();
+    }
+
+
+
+    public Script getActiveScript() {
+        return scriptRunnerDisplay.getFieldWriter().getScript();
     }
 }

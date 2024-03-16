@@ -3,19 +3,16 @@ package backspace.display.field.printer;
 import backspace.display.field.Frame;
 import jssc.SerialPort;
 import jssc.SerialPortException;
-import jssc.SerialPortList;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.stereotype.Component;
 
 import java.awt.*;
 import java.io.File;
-import java.nio.file.Files;
-import java.util.Random;
 import java.util.StringJoiner;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 @Log4j2
@@ -26,7 +23,11 @@ public class SerialPrinter implements FieldPrinter {
     private final Integer blockCount;
 
     private final Integer blockSize;
+    private final ScheduledExecutorService executorService;
 
+    private final AtomicBoolean isDisconnected = new AtomicBoolean(true);
+
+    private final File portFile;
 
 
     private static final int MAX_BUFFER_SIZE = 600;
@@ -39,10 +40,23 @@ public class SerialPrinter implements FieldPrinter {
                          @Value("${display.printer.serial.parity}") Integer parity,
                          @Value("${display.block.count}") Integer blockCount,
                          @Value("${display.block.size}") Integer blockSize) {
-        selectPort(portName, baudRate, dataBits, stopBits, parity);
         this.blockCount = blockCount;
         this.blockSize = blockSize;
-        flush();
+        portFile = new File(portName);
+        this.executorService = Executors.newScheduledThreadPool(1);
+        selectPort(portName, baudRate, dataBits, stopBits, parity);
+
+        this.executorService.scheduleAtFixedRate(() -> {
+            if (!portFile.exists()) {
+                if (!isDisconnected.get()) {
+                    log.warn("Device disconnected. Waiting for restore...");
+                }
+                isDisconnected.set(true);
+            } else if (isDisconnected.get()) {
+                log.info("Device restored. Reconnecting...");
+                selectPort(portName, baudRate, dataBits, stopBits, parity);
+            }
+        }, 0, 50, java.util.concurrent.TimeUnit.MILLISECONDS);
     }
 
 
@@ -54,7 +68,7 @@ public class SerialPrinter implements FieldPrinter {
             @Value("${display.block.count}") Integer blockCount,
             @Value("${display.block.size}") Integer blockSize) {
         this(findPort(), baudRate, dataBits, stopBits, parity, blockCount, blockSize);
-        }
+    }
 
     @SneakyThrows
     public void selectPort(String portName, int baudRate, int dataBits, int stopBits, int parity) {
@@ -66,18 +80,18 @@ public class SerialPrinter implements FieldPrinter {
                 parity);
         serialPort.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN |
                 SerialPort.FLOWCONTROL_RTSCTS_OUT);
-
-
+        isDisconnected.set(false);
     }
+
 
     private static String findPort() {
         File[] portNames = new File("/dev/serial/by-id").listFiles();
-        if (portNames!=null && portNames.length == 1) {
+        if (portNames != null && portNames.length == 1) {
             log.info("USB device found: " + portNames[0]);
             return portNames[0].getAbsolutePath();
         } else {
             StringBuilder errorMessage = new StringBuilder();
-            if (portNames!=null && portNames.length>1){
+            if (portNames != null && portNames.length > 1) {
                 errorMessage.append("Multiple USB devices found: ");
                 StringJoiner joiner = new StringJoiner(", ");
                 for (File portName : portNames) {
@@ -91,15 +105,20 @@ public class SerialPrinter implements FieldPrinter {
             throw new IllegalStateException(errorMessage.toString());
         }
     }
+
     @Override
     public synchronized void printField(Frame frame) {
-        if (isBufferQueued()){
+        if (isBufferQueued()) {
             throw new IllegalStateException("Buffer is full");
+        }
+        if (isDisconnected.get()) {
+            log.trace("Device is disconnected. Skipping frame");
+            return;
         }
         byte[][] bits = new byte[blockCount][blockSize];
         for (int width = 0; width < 40; width++) {
             for (int height = 0; height < 32; height++) {
-                Point point = new Point(width , height);
+                Point point = new Point(width, height);
                 byte brightness = frame.getPixelBrightness(point);
                 int x_bit = 7 - width % 8;
                 int y_byte = height % 16;
@@ -137,7 +156,7 @@ public class SerialPrinter implements FieldPrinter {
         serialPort.writeByte((byte) 0x00);
     }
 
-    public boolean isBufferQueued(){
+    public boolean isBufferQueued() {
         try {
             return serialPort.getOutputBufferBytesCount() > MAX_BUFFER_SIZE;
         } catch (SerialPortException e) {
@@ -145,7 +164,6 @@ public class SerialPrinter implements FieldPrinter {
             return false;
         }
     }
-
 
 
 }

@@ -14,7 +14,7 @@ import java.util.concurrent.ScheduledExecutorService;
 @Log4j2
 public class IntervalRefreshDisplay extends Display {
 
-    private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    private ScheduledExecutorService executor;
     private final Duration interval;
 
     public IntervalRefreshDisplay(Duration interval, Frame frame, FieldWriter fieldWriter, FieldPrinter fieldPrinter, DisplayConfig displayConfig) {
@@ -23,14 +23,17 @@ public class IntervalRefreshDisplay extends Display {
     }
 
 
-
-
+    @Override
     public void start() {
+        super.start();
+        executor = Executors.newSingleThreadScheduledExecutor();
         executor.scheduleAtFixedRate(this::tick, 0, interval.toMillis(), java.util.concurrent.TimeUnit.MILLISECONDS);
     }
 
 
+    @Override
     public void stop() {
         executor.shutdown();
+        super.stop();
     }
 }

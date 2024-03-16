@@ -18,7 +18,7 @@ public class SerialPrinterConfig {
                                                @Value("${display.printer.serial.parity}") Integer parity,
                                                @Value("${display.block.count}") Integer blockCount,
                                                @Value("${display.block.size}") Integer blockSize) {
-        if (portName==null){
+        if (portName == null) {
             return new SerialPrinter(baudRate, dataBits, stopBits, parity, blockCount, blockSize);
         } else {
             return new SerialPrinter(portName, baudRate, dataBits, stopBits, parity, blockCount, blockSize);

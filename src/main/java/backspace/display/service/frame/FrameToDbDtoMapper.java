@@ -2,20 +2,11 @@ package backspace.display.service.frame;
 
 import backspace.display.field.Frame;
 
-import java.util.Base64;
-
 import static backspace.display.service.ByteBase64MappingUtils.base64ToBytesListConverter;
 import static backspace.display.service.ByteBase64MappingUtils.bytesListToBase64Converter;
 
 
 public class FrameToDbDtoMapper {
-
-    private final static Base64.Encoder base64Encoder = Base64.getEncoder();
-    private final static Base64.Decoder base64Decoder = Base64.getDecoder();
-
-
-
-
     public static FrameDbDto frameToDbDtoConverter(Frame frame) {
         FrameDbDto frameDbDto = new FrameDbDto();
         frameDbDto.setId(frame.getId());

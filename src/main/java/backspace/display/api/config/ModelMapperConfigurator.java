@@ -4,12 +4,12 @@ import backspace.display.api.rest.frame.FrameCreationRequestDto;
 import backspace.display.api.rest.frame.FrameDto;
 import backspace.display.api.rest.scripts.ScriptCreationRequestDto;
 import backspace.display.api.rest.scripts.ScriptDto;
-import backspace.display.api.websocket.LiveFrameUpdateRequestBase64;
+import backspace.display.api.websocket.live.LiveFrameUpdateRequestBase64;
 import backspace.display.field.Frame;
 import backspace.display.script.Script;
 import backspace.display.service.ByteBase64MappingUtils;
-import backspace.display.service.FrameCreationRequest;
-import backspace.display.service.LiveFrameUpdateRequest;
+import backspace.display.service.frame.FrameCreationRequest;
+import backspace.display.service.live.LiveFrameUpdateRequest;
 import backspace.display.service.script.ScriptCreationRequest;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
@@ -65,21 +65,17 @@ public class ModelMapperConfigurator {
         TypeMap<ScriptCreationRequestDto, ScriptCreationRequest> typeMap =
                 modelMapper.createTypeMap(ScriptCreationRequestDto.class, ScriptCreationRequest.class);
         typeMap.addMappings(mapper -> mapper.using(context ->
-                        new String(
-                                decoder.decode((String) context.getSource())
-                        ))
+                        context.getSource())
                 .map(ScriptCreationRequestDto::getScript, ScriptCreationRequest::setScript));
     }
 
 
     @PostConstruct
     private void ScriptModelToDtoMapper() {
-        final Base64.Encoder encoder = Base64.getEncoder();
         TypeMap<Script, ScriptDto> typeMap =
                 modelMapper.createTypeMap(Script.class, ScriptDto.class);
         typeMap.addMappings(mapper -> mapper.using(context ->
-                        encoder.encodeToString(((String) context.getSource()).getBytes()
-                        ))
+                        context.getSource())
                 .map(Script::getScript, ScriptDto::setScript));
     }
 

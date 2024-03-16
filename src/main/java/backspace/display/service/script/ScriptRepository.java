@@ -4,7 +4,6 @@ import backspace.display.script.Script;
 import backspace.display.service.repo.JsonRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 
 @Component

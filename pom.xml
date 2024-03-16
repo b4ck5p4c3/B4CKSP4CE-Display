@@ -55,6 +55,23 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.3.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.python</groupId>
+            <artifactId>jython-standalone</artifactId>
+            <version>2.7.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.luaj/luaj-jse -->
+        <dependency>
+            <groupId>org.luaj</groupId>
+            <artifactId>luaj-jse</artifactId>
+            <version>3.0.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.luaj/luaj-jme -->
+        <dependency>
+            <groupId>org.luaj</groupId>
+            <artifactId>luaj-jme</artifactId>
+            <version>3.0.1</version>
+        </dependency>
 
         <dependency>
             <groupId>org.modelmapper</groupId>

@@ -38,3 +38,9 @@ data/
 
 py-*.py
 src/main/resources/testFile.txt
+
+/web-sources/node_modules/
+
+dev/serialproxy.sh
+
+scriptsBackup

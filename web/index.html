@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>admin-panel</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/bricks.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+
+<body style="--bs-body-bg: #ffffff;">
+    <div class="container-fluid" style="--bs-light: #ffffff;--bs-light-rgb: 255,255,255;">
+        <div class="row flex-column flex-sm-row wrapper min-vh-100">
+            <div class="col-12 col-sm-1 col-md-3 col-xl-1 flex-shrink-1 p-0 bg-dark">
+                <nav class="navbar navbar-expand-sm bg-dark text-nowrap flex-row align-items-start flex-sm-column navbar-dark">
+                    <div class="container flex-sm-column"><a class="navbar-brand" href="#"><i class="fa fa-braille fa-2x text-warning"></i></a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                        <div class="collapse navbar-collapse" id="navcol-1">
+                            <ul class="navbar-nav flex-column justify-content-between w-100">
+                                <li class="nav-item" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="right" title="Overview"><a class="nav-link" href="/index.html"><i class="fa fa-home me-2 text-info"></i><span class="d-inline-block d-sm-none d-md-inline-block">Frames</span></a></li>
+                                <li class="nav-item" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="right" title="Properties" hidden=""><a class="nav-link" href="#"><i class="fa fa-gear me-2 text-info"></i><span class="d-inline-block d-sm-none d-md-inline-block">Props</span></a></li>
+                                <li class="nav-item" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="right" title="Properties"><a class="nav-link" href="bricknballs.html"><i class="fa fa-circle me-2 text-info"></i><span class="d-inline-block d-sm-none d-md-inline-block">Bricks</span></a></li>
+                                <li class="nav-item" data-bs-toggle="tooltip" data-bss-tooltip="" data-bs-placement="right" title="Properties"><a class="nav-link" href="snake.html"><i class="fa fa-ellipsis-v me-2 text-info" style="padding-left: 5px;"></i><span class="d-inline-block d-sm-none d-md-inline-block" style="padding-left: 5px;;">Snake</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="col-12 col-sm-11 col-md-9 col-xl-9 bg-light py-3" style="background: var(--bs-body-bg);">
+                <div class="row">
+                    <div class="col-6" style="margin-top: 10px;margin-bottom: 20px;">
+                        <div class="input-group"><input class="form-control" type="text" id="editorFrameName" placeholder="Frame name..."><button class="btn btn-outline-secondary" type="button" onclick="applyRandomFrameName()">Random</button></div>
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-md-6" style="padding-right: 12px;width: 460px;"><canvas id="editorCanvas" width="440" height="352"></canvas></div>
+                            <div class="col d-grid" id="editorTools">
+                                <div class="row" id="brushSettings" min="0" max="7" step="1">
+                                    <div class="col align-self-start">
+                                        <div class="input-group"><span class="input-group-text" style="background: rgb(255,255,255);border-style: none;"><i class="fa fa-paint-brush"></i>&nbsp;<input class="form-range" type="range" id="brushSize" style="margin-left: 10px;" min="0" max="7" step="1"></span></div>
+                                        <div class="btn-group" role="group" style="margin-top: 10px;"><button class="btn btn-primary d-xxl-flex" id="brushButton" type="button" onclick="setBrightness(255)"><i class="fa fa-paint-brush"></i></button><button class="btn btn-primary" id="eraseButton" type="button" style="margin-left: 20px;" onclick="setBrightness(0)"><i class="fa fa-eraser"></i></button></div>            <div>
+              <label hidden="hidden" for="brightness">Brightness:</label>
+              <input class="form-range" type="hidden" id="brightness" min="0" max="255" value="255" step="255">
+              <input type="hidden" id="colorPicker" disabled="disabled" value="#ff0000">
+            </div>
+
+                                    </div>
+                                </div>
+                                <div class="row g-0 d-xl-flex" id="stateControlls">
+                                    <div class="col align-self-end">
+                                        <div class="form-check"><input class="form-check-input" type="checkbox" id="autoSave" checked=""><label class="form-check-label" for="formCheck-1">Live mode</label></div><button class="btn btn-primary d-block" id="newButton" type="button" style="margin-bottom: 10px;" onclick="newImage()">New</button><button class="btn btn-success" id="saveButton" type="button" onclick="saveImage()">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 25px;">
+                    <div class="col">
+                        <div class="d-flex" id="cardsSearch" style="width: 50%;"><select id="itemsPerPage" class="form-select" style="width: 10%;display: inline;min-width: 138px;">
+                                <option value="10">10 frames</option>
+                                <option value="25">25 frames</option>
+                                <option value="50">50 frames</option>
+                                <option value="100">100 frames</option>
+                                <option value="9999">All</option>
+                            </select>
+                            <div class="input-group" style="margin-left: 20px;"><input class="form-control d-xxl-flex" type="text" id="cardsSearchText" style="display: inline-flex;min-width:50px;" placeholder="Name.."></div>
+                        </div>  <div hidden="hidden" id="card-template" class="card m-3">
+    <div class="card-header text-center">
+      <input type="hidden" name="id">
+      <button type="button" class="btn btn-success playButton">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play" viewBox="0 0 16 16">
+          <path d="M10.804 8 5 4.633v6.734zm.792-.696a.802.802 0 0 1 0 1.392l-6.363 3.692C4.713 12.69 4 12.345 4 11.692V4.308c0-.653.713-.998 1.233-.696z"/>
+        </svg>
+      </button>
+      <button type="button" class="btn btn-outline-primary editButton">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+          <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z"/>
+        </svg>
+      </button>
+      <button type="button" class="btn btn-outline-danger removeButton">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
+          <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
+        </svg>
+      </button>
+    </div>
+    <img class="card-img-top" name="card-image" src="" alt="Card image cap">
+    <div class="card-body">
+      <h5 class="card-title" name="title">Card title</h5>
+      <p class="card-text" name="description">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+
+    </div>
+    <div class="card-body">
+    </div>
+  </div>
+                        <div class="card-group" id="gallery"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><script type="importmap">
+  {
+    "imports": {
+      "@stomp/stompjs": "https://ga.jspm.io/npm:@stomp/stompjs@7.0.0/esm6/index.js"
+    }
+  }
+</script>
+
+<!-- ES Module Shims: Import maps polyfill for modules browsers without import maps support (all except Chrome 89+) -->
+<script
+  src="https://ga.jspm.io/npm:es-module-shims@1.5.1/dist/es-module-shims.js"
+  crossorigin="anonymous"
+></script>
+
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/node_modules_monaco-editor_esm_vs_basic-languages_lua_lua_js.bundle.js"></script>
+    <script src="assets/js/basic.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
