@@ -15,6 +15,7 @@ import org.luaj.vm2.lib.jse.JsePlatform;
 import org.springframework.stereotype.Component;
 
 import java.io.PrintStream;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -27,6 +28,8 @@ public class ScriptWriter implements FieldWriter {
     private static final int MAX_OUT_BUFFER_SIZE = 8192;
 
     private final QueuedLimitedOutputStream stdout = new QueuedLimitedOutputStream(MAX_OUT_BUFFER_SIZE);
+
+    private static final List<String> libBlacklist = List.of("os", "coroutine", "io", "package", "luajava");
 
 
     public ScriptWriter(Script script) {
@@ -47,8 +50,10 @@ public class ScriptWriter implements FieldWriter {
     private void executeScriptToField(Script script, Frame frame) {
         long start = System.currentTimeMillis();
         Globals globals = JsePlatform.standardGlobals();
+
         globals.STDOUT = new PrintStream(stdout);
         globals.STDERR = new PrintStream(stdout);
+        applyLibsBlacklist(globals);
         int[][] field = bytesToInteger(frame.getPixelsBrightnesses());
         globals.set("PIXELS", CoerceJavaToLua.coerce(field));
         globals.set("WIDTH", frame.width());
@@ -71,6 +76,13 @@ public class ScriptWriter implements FieldWriter {
         }
         log.debug("Script execution took {} ms", System.currentTimeMillis() - start);
     }
+
+    private void applyLibsBlacklist(Globals globals) {
+        for (String lib : libBlacklist) {
+            globals.set(lib, LuaValue.NIL);
+        }
+    }
+
 
 
     private int[][] bytesToInteger(byte[][] bytes) {
