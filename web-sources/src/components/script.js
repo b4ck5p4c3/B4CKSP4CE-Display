@@ -2,11 +2,11 @@ import React, {useState, useRef} from "react";
 import CodeEditor from "./codeEditor";
 import ScriptsAPI from "../services/scriptsAPI";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faSave, faStop } from '@fortawesome/free-solid-svg-icons'
+import { faPlay, faSave, faTrash } from '@fortawesome/free-solid-svg-icons'
 import Console from "./console";
 
 
-const ScriptCard = ({ id, title, description, script, runInterval }) => {
+const ScriptCard = ({ id, title, description, script, runInterval, onRemoveEvent }) => {
 
     const [scriptName, setScriptName] = useState(title);
     const [scriptDescription, setScriptDescription] = useState(description);
@@ -127,14 +127,12 @@ const ScriptCard = ({ id, title, description, script, runInterval }) => {
               <FontAwesomeIcon icon={faPlay} />
             </button>
             <button
-              className="btn btn-secondary disabled"
+              className="btn btn-outline-danger"
               type="button"
               style={{ marginBottom: 3, width: 40 }}
-              name="stopScript"
-              hidden=""
-              disabled=""
+              onClick={() => onRemoveEvent(id)}
             >
-              <FontAwesomeIcon icon={faStop} />
+              <FontAwesomeIcon icon={faTrash} />
             </button>
             <button
               className={`btn btn-secondary ${saveButtonDisabled ? "disabled" : ""}`}

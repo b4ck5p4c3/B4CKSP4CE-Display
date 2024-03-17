@@ -17,7 +17,7 @@ public class ScriptService {
 
     private final Repository<Script> scriptRepository;
 
-    public void runScript(String scriptId) {
+    public synchronized void runScript(String scriptId) {
         Script script = scriptRepository.getById(scriptId);
         setScript(script);
     }

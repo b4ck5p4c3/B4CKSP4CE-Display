@@ -40,8 +40,8 @@ public class ScriptsController {
         return modelMapper.map(script, ScriptDto.class);
     }
 
-    @DeleteMapping
-    public void deleteScript(@RequestParam(name = "script") String scriptId) {
+    @DeleteMapping("{scriptId}")
+    public void deleteScript(@PathVariable(name = "scriptId") String scriptId) {
         scriptService.deleteScript(scriptId);
     }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import Backend, {fetchRequest} from "./apiConfig";
+import Backend, {fetchRequest, fetchNoResponse} from "./apiConfig";
 
 const ScriptsAPI = {
     create: async (name, description, script, runIntervalMs) => {
@@ -21,6 +21,9 @@ const ScriptsAPI = {
     },
     active: async () => {
         return await fetchRequest(Backend.script.active(), 'GET');
+    },
+    remove: async (scriptId) => {
+        return await fetchNoResponse(Backend.script.remove(scriptId), 'DELETE');
     }
 }
 

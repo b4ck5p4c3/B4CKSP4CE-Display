@@ -60,6 +60,7 @@ function App() {
           <div>
             <ScriptContainer 
               scripts={scripts}
+              setScripts={setScripts}
             />
           </div>
         </div>

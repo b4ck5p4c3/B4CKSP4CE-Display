@@ -11,7 +11,8 @@ const Backend = {
           run: (scriptId) => `${Backend.baseUrl}/script/${scriptId}/run`,
           update: (scriptId) => `${Backend.baseUrl}/script/${scriptId}`,
           get: () => `${Backend.baseUrl}/script`,
-          active: () => `${Backend.baseUrl}/script/active`
+          active: () => `${Backend.baseUrl}/script/active`,
+          remove: (scriptId) => `${Backend.baseUrl}/script/${scriptId}`
       },
   headers: {
         'Content-Type': 'application/json'
@@ -36,6 +37,23 @@ const Backend = {
      }
 };
 
+const fetchNoResponse = async (url, method, body = null) => {
+    const options = {
+        method: method,
+        headers: Backend.headers,
+    };
+
+    if (body) {
+        options.body = JSON.stringify(body);
+    }
+
+    try {
+        await fetch(url, options);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
 
  export default Backend;
- export { fetchRequest };
+ export { fetchRequest, fetchNoResponse };

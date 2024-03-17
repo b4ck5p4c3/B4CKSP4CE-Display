@@ -21,7 +21,7 @@ window.MonacoEnvironment = {
       return './ts.worker.bundle.js';
     }
     return './editor.worker.bundle.js';
-  }
+  }Because React-Bootstrap completely reimplements Bootstrap's JavaScript, it's not automatically compatible with themes that extend the default JavaScript behaviors.
 };*/
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

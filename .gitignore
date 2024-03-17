@@ -39,8 +39,15 @@ data/
 py-*.py
 src/main/resources/testFile.txt
 
-/web-sources/node_modules/
+/web-sources/node_modules/*
 
 dev/serialproxy.sh
 
 scriptsBackup
+
+node_modules/
+web-sources/package-lock.json
+
+package-lock.json
+
+package.json
