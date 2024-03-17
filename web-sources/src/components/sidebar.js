@@ -1,14 +1,79 @@
 import React from 'react';
-
+import {faHome, faCircle, faBraille, faCode, faEllipsisV} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 const Sidebar = () => (
-    <nav class="navbar navbar-expand-sm bg-dark text-nowrap flex-row align-items-start flex-sm-column navbar-dark">
-        <div class="container flex-sm-column"><a class="navbar-brand" href="#"><i class="fa fa-braille fa-2x text-warning"></i></a><button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
-            <div id="navcol-1" class="collapse navbar-collapse">
-                <ul class="navbar-nav flex-column justify-content-between w-100">
-                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Overview"><a class="nav-link" href="/index.html"><i class="fa fa-home me-2 text-info"></i><span class="d-inline-block d-sm-none d-md-inline-block">Frames</span></a></li>
-                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Properties" hidden><a class="nav-link" href="#"><i class="fa fa-gear me-2 text-info"></i><span class="d-inline-block d-sm-none d-md-inline-block">Props</span></a></li>
-                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Properties"><a class="nav-link" href="bricknballs.html"><i class="fa fa-circle me-2 text-info"></i><span class="d-inline-block d-sm-none d-md-inline-block">Bricks</span></a></li>
-                    <li class="nav-item" data-bs-toggle="tooltip" data-bs-placement="right" title="Properties"><a class="nav-link" href="snake.html"><i class="fa fa-ellipsis-v me-2 text-info" style="padding-left: 5px;"></i><span class="d-inline-block d-sm-none d-md-inline-block" style="padding-left: 5px;">Snake</span></a></li>
+    <nav className="navbar navbar-expand-sm bg-dark text-nowrap flex-row align-items-start flex-sm-column navbar-dark">
+        <div className="container flex-sm-column">
+            <a className="navbar-brand" href="#">
+                <FontAwesomeIcon icon={faBraille} size={"2x"} color={"#ffc107"} />
+            </a>
+            <button
+                className="navbar-toggler"
+                data-bs-toggle="collapse"
+                data-bs-target="#navcol-1"
+            >
+                <span className="visually-hidden">Toggle navigation</span>
+                <span className="navbar-toggler-icon" />
+            </button>
+            <div id="navcol-1" className="collapse navbar-collapse">
+                <ul className="navbar-nav flex-column justify-content-between w-100">
+                    <li
+                        className="nav-item"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="Overview"
+                    >
+                        <a className="nav-link" href="/">
+                            <FontAwesomeIcon icon={faHome} size={"sm"}/>
+                            <span className="d-inline-block d-sm-none d-md-inline-block ms-1">
+                Frames
+              </span>
+                        </a>
+                    </li>
+                    <li
+                        className="nav-item"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="Properties"
+                        hidden=""
+                    >
+                        <a className="nav-link" href="/scripts">
+                            <FontAwesomeIcon icon={faCode} size={"sm"}/>
+                            <span className="d-inline-block d-sm-none d-md-inline-block ms-1">
+                Scripts
+              </span>
+                        </a>
+                    </li>
+                    <li
+                        className="nav-item"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="Properties"
+                    >
+                        <a className="nav-link" href="bricknballs">
+                            <FontAwesomeIcon icon={faCircle} size={"sm"}/>
+                            <span className="d-inline-block d-sm-none d-md-inline-block ms-2">
+                Bricks
+              </span>
+                        </a>
+                    </li>
+                    <li
+                        className="nav-item"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="Properties"
+                    >
+                        <a className="nav-link" href="snake">
+                            <FontAwesomeIcon icon={faEllipsisV} size={"sm"} style={{ paddingLeft: 5 }}/>
+
+                            <span
+                                className="d-inline-block d-sm-none d-md-inline-block ms-2"
+                                style={{ paddingLeft: 5 }}
+                            >
+                Snake
+              </span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
