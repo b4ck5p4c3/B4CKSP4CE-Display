@@ -44,36 +44,36 @@ const Sidebar = () => (
               </span>
                         </a>
                     </li>
-                    <li
-                        className="nav-item"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="right"
-                        title="Properties"
-                    >
-                        <a className="nav-link" href="bricknballs">
-                            <FontAwesomeIcon icon={faCircle} size={"sm"}/>
-                            <span className="d-inline-block d-sm-none d-md-inline-block ms-2">
-                Bricks
-              </span>
-                        </a>
-                    </li>
-                    <li
-                        className="nav-item"
-                        data-bs-toggle="tooltip"
-                        data-bs-placement="right"
-                        title="Properties"
-                    >
-                        <a className="nav-link" href="snake">
-                            <FontAwesomeIcon icon={faEllipsisV} size={"sm"} style={{ paddingLeft: 5 }}/>
+              {/*      <li*/}
+              {/*          className="nav-item"*/}
+              {/*          data-bs-toggle="tooltip"*/}
+              {/*          data-bs-placement="right"*/}
+              {/*          title="Properties"*/}
+              {/*      >*/}
+              {/*          <a className="nav-link" href="bricknballs">*/}
+              {/*              <FontAwesomeIcon icon={faCircle} size={"sm"}/>*/}
+              {/*              <span className="d-inline-block d-sm-none d-md-inline-block ms-2">*/}
+              {/*  Bricks*/}
+              {/*</span>*/}
+              {/*          </a>*/}
+              {/*      </li>*/}
+              {/*      <li*/}
+              {/*          className="nav-item"*/}
+              {/*          data-bs-toggle="tooltip"*/}
+              {/*          data-bs-placement="right"*/}
+              {/*          title="Properties"*/}
+              {/*      >*/}
+              {/*          <a className="nav-link" href="snake">*/}
+              {/*              <FontAwesomeIcon icon={faEllipsisV} size={"sm"} style={{ paddingLeft: 5 }}/>*/}
 
-                            <span
-                                className="d-inline-block d-sm-none d-md-inline-block ms-2"
-                                style={{ paddingLeft: 5 }}
-                            >
-                Snake
-              </span>
-                        </a>
-                    </li>
+              {/*              <span*/}
+              {/*                  className="d-inline-block d-sm-none d-md-inline-block ms-2"*/}
+              {/*                  style={{ paddingLeft: 5 }}*/}
+              {/*              >*/}
+              {/*  Snake*/}
+              {/*</span>*/}
+              {/*          </a>*/}
+              {/*      </li>*/}
                 </ul>
             </div>
         </div>

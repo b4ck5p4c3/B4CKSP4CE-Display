@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class FrameCreatedResponse {
-    private String frameId;
+    private String id;
 }

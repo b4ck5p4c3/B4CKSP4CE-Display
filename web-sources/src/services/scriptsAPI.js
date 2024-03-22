@@ -1,5 +1,4 @@
-import React from "react";
-import Backend, {fetchRequest, fetchNoResponse} from "./apiConfig";
+import Backend, {fetchNoResponse, fetchRequest} from "./apiConfig";
 
 const ScriptsAPI = {
     create: async (name, description, script, runIntervalMs) => {
@@ -28,4 +27,3 @@ const ScriptsAPI = {
 }
 
 export default ScriptsAPI;
-

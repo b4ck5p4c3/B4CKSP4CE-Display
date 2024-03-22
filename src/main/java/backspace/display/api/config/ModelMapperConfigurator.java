@@ -40,7 +40,7 @@ public class ModelMapperConfigurator {
         TypeMap<FrameCreationRequestDto, FrameCreationRequest> typeMap =
                 modelMapper.createTypeMap(FrameCreationRequestDto.class, FrameCreationRequest.class);
         typeMap.addMappings(mapper -> mapper.using(base64ToBytesListConverter())
-                .map(FrameCreationRequestDto::getPixelsBrightnesses, FrameCreationRequest::setFrameBytes));
+                .map(FrameCreationRequestDto::getGridBrightnesses, FrameCreationRequest::setFrameBytes));
     }
 
     @PostConstruct
@@ -48,7 +48,7 @@ public class ModelMapperConfigurator {
         TypeMap<Frame, FrameDto> typeMap =
                 modelMapper.createTypeMap(Frame.class, FrameDto.class);
         typeMap.addMappings(mapper -> mapper.using(bytesToBase64())
-                .map(Frame::getPixelsBrightnesses, FrameDto::setPixelsBrightnesses));
+                .map(Frame::getPixelsBrightnesses, FrameDto::setGridBrightnesses));
     }
 
     @PostConstruct

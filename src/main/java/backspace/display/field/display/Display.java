@@ -53,9 +53,11 @@ public abstract class Display {
             throw new IllegalStateException("Illegal state when stopping display. No display is running");
         }
         runningDisplay = null;
+        log.info("Display {} stopped", this.getClass().getSimpleName());
     }
 
     public void activate() {
+        log.info("Activating display {}", this.getClass().getSimpleName());
         if (runningDisplay == this) {
             return;
         }

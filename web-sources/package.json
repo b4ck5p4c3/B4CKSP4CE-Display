@@ -16,6 +16,7 @@
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",
     "react-monaco-editor": "^0.55.0",
+    "react-router-dom": "^6.22.3",
     "react-scripts": "5.0.1",
     "sockjs-client": "^1.5.0",
     "stompjs": "^2.3.3",

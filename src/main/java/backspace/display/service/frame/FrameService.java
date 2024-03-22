@@ -3,13 +3,16 @@ package backspace.display.service.frame;
 import backspace.display.field.Frame;
 import backspace.display.field.display.Display;
 import backspace.display.service.repo.Repository;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
+@Log4j2
 public class FrameService {
 
 
@@ -24,7 +27,9 @@ public class FrameService {
 
     public Frame createFrame(FrameCreationRequest frameCreationRequest) {
         Frame frame = new Frame(frameCreationRequest.getName(), frameCreationRequest.getDescription(), frameCreationRequest.getFrameBytes());
-        return saveFrame(frame);
+        Frame savedFrame = saveFrame(frame);
+        log.info("Created frame with id: {}", savedFrame.getId());
+        return savedFrame;
     }
 
     public Frame createFrame(FrameCreationRequest frameCreationRequest, boolean activate) {
@@ -38,6 +43,7 @@ public class FrameService {
     public void setActiveFrameById(String frameId) {
         Frame frame = getFrameById(frameId);
         setActiveFrame(frame);
+
     }
 
     private void setActiveFrame(Frame frame) {
@@ -69,12 +75,16 @@ public class FrameService {
     }
 
     public Frame updateFrame(String frameId, FrameCreationRequest frameCreationRequest) {
+        Objects.requireNonNull(frameId, "Frame id cannot be null");
+        Objects.requireNonNull(frameCreationRequest, "Frame creation request cannot be null");
         Frame frame = getFrameById(frameId);
         frame.setName(frameCreationRequest.getName());
         frame.setDescription(frameCreationRequest.getDescription());
         frame.setPixelsBrightnesses(frameCreationRequest.getFrameBytes());
         Frame newFrame = saveFrame(frame);
-        if (display.getFrame().getId().equals(frameId))
+        log.info("Updated frame with id: {}", newFrame.getId());
+        final Frame activeFrame = display.getFrame();
+        if (activeFrame != null && activeFrame.getId() != null && display.getFrame().getId().equals(frameId))
             setActiveFrame(newFrame);
         return newFrame;
     }

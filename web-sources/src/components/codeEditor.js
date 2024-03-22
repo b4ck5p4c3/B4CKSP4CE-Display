@@ -40,27 +40,28 @@ const CodeEditor = forwardRef(({ runInterval, script,  saveEventHandler, runEven
       <div className="d-flex">
         <button
           id="saveCodeButton"
-          className="btn btn-primary"
+          className="btn btn-success"
           type="button"
           style={{ marginRight: 8 }}
           name="saveScriptButton"
           onClick={saveEventHandler}
         >
           <i className="fa fa-save" />
-          &nbsp;Save
+          &nbsp;Save & Run
         </button>
-        <button
-          id="runCodeButton"
-          className="btn btn-success"
-          type="button"
-          name="runScriptButton"
-          onClick={runEventHandler}
-          style={{ marginRight: 12 }}
+        {/*  */}
+        {/*<button*/}
+        {/*  id="runCodeButton"*/}
+        {/*  className="btn btn-success"*/}
+        {/*  type="button"*/}
+        {/*  name="runScriptButton"*/}
+        {/*  onClick={runEventHandler}*/}
+        {/*  style={{ marginRight: 12 }}*/}
 
-        >
-          <i className="fa fa-play" />
-          &nbsp;Run
-        </button>
+        {/*>*/}
+        {/*  <i className="fa fa-play" />*/}
+        {/*  &nbsp;Run*/}
+        {/*</button>*/}
         <RunIntervalSelector runInterval={scriptRunInterval} setRunInterval={setScriptRunInterval} />
       </div>
       <div

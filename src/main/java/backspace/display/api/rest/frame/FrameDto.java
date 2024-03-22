@@ -9,6 +9,6 @@ public class FrameDto {
     private String id;
     private String name;
     private String description;
-    private List<String> pixelsBrightnesses;
+    private List<String> gridBrightnesses;
 }
 

@@ -4,6 +4,7 @@ import { useFetchScripts } from "../hooks/useFetchScripts";
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import ScriptsAPI from '../services/scriptsAPI';
+import DangerModal from "./dangerModal";
 
 const ScriptContainer = ({scripts, setScripts}) => {
     const [removeModalShow, setRemoveModalShow] = useState(false);
@@ -34,23 +35,16 @@ const ScriptContainer = ({scripts, setScripts}) => {
 
     return (
         <div id="scriptsContainer" className="card-group d-inline">
-            <Modal show={removeModalShow} onHide={handleClose} animation={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Remove script {getScriptById(removeScriptId)?.title}?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <p>Are you sure you want to remove this script?</p>
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="outline-danger" onClick={handleRemove}>
-                        Remove
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-            {scripts.map(item => (
+            <DangerModal
+                submitEventHandler={handleRemove}
+                closeEventHandler={handleClose}
+                headerName={`Remove script ${getScriptById(removeScriptId)?.name}?`}
+                bodyText={`Are you sure you want to remove the script ${getScriptById(removeScriptId)?.name}?`}
+                submitButtonName="Remove"
+                removeModalShow={removeModalShow}
+                setRemoveModalShow={setRemoveModalShow}
+            />
+                {scripts.map(item => (
                 <ScriptCard
                     key={item.id}
                     id={item.id}

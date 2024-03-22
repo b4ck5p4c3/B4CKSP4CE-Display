@@ -316,7 +316,7 @@ function frameUpdateTrigger(){
                 console.log('Success:', data);
                 setSaveButtonState('Saved!', true);
                 editorMode = 'edit';
-                editorFrameId = data.frameId;
+                editorFrameId = data.id;
               })
               .catch(error => {
                 console.error('Error:', error);

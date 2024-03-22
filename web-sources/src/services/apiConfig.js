@@ -14,6 +14,16 @@ const Backend = {
           active: () => `${Backend.baseUrl}/script/active`,
           remove: (scriptId) => `${Backend.baseUrl}/script/${scriptId}`
       },
+    frame: {
+        get: (offset, limit, title) => `${Backend.baseUrl}/frame?offset=${offset}&limit=${limit}&title=${title}`,
+        create:(activate) => `${Backend.baseUrl}/frame?activate=${activate}`,
+        activate: (id) => `${Backend.baseUrl}/frame/${id}/activate`,
+        remove: (id) => `${Backend.baseUrl}/frame/${id}`,
+        update: (id) => `${Backend.baseUrl}/frame/${id}`
+    },
+    display: {
+        state: () => `${Backend.baseUrl}/display/state`
+    },
   headers: {
         'Content-Type': 'application/json'
     }
@@ -48,7 +58,7 @@ const fetchNoResponse = async (url, method, body = null) => {
     }
 
     try {
-        await fetch(url, options);
+        return await fetch(url, options);
     } catch (error) {
         console.log(error);
     }

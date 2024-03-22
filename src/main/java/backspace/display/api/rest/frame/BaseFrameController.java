@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("api/frame")
-public class BaseFrameController {
+public class    BaseFrameController {
 
     private FrameService frameController;
     private final ModelMapper modelMapper;

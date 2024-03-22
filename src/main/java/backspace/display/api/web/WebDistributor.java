@@ -6,20 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WebDistributor {
 
-    @GetMapping
+    @GetMapping(value = {"/", "scripts"})
     public String index() {
-        return "index";
+        return "forward:/index.html";
     }
 
-    @GetMapping("/snake")
-    public String snake() {
-        return "snake";
-    }
-
-    @GetMapping("/bricknballs")
-    public String bricknballs() {
-        return "bricknballs";
-    }
 
 
 }

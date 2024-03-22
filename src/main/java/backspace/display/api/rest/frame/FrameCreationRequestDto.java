@@ -8,5 +8,5 @@ import java.util.List;
 public class FrameCreationRequestDto {
     private String name;
     private String description;
-    private List<String> pixelsBrightnesses;
+    private List<String> gridBrightnesses;
 }

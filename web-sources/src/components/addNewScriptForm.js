@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ScriptsAPI from '../services/scriptsAPI';
+import ScriptsAPI from '../services/framesAPI';
 import RunIntervalSelector from './runInterval';
 
 const AddNewScriptForm = ({ onAddedEvent }) => {
@@ -36,7 +36,7 @@ const AddNewScriptForm = ({ onAddedEvent }) => {
             </div>
 
                 <RunIntervalSelector runInterval={newScriptRunInterval} setRunInterval={setNewScriptRunInterval} />
-            <button className="btn btn-success" type="button" onClick={handleAddClick}>Add!</button>
+            <button className="btn btn-success" type="button" style={{ marginTop: '10px' }} onClick={handleAddClick}>Add!</button>
         </div>
     );
 };
