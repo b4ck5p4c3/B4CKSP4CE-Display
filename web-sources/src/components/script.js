@@ -25,7 +25,6 @@ const ScriptCard = ({ id, title, description, script, runInterval, onRemoveEvent
     };
 
     const saveAndRunScript = async () => {
-      console.log("saveAndRunScript");
       await onSaveScript()
       .then(onRunScript());
     }

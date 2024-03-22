@@ -37,10 +37,8 @@ const DangerModal = ({
             }
         };
 
-        // Добавляем обработчик событий к window, когда компонент монтируется
         window.addEventListener("keydown", handleKeyDown);
 
-        // Удаляем обработчик событий, когда компонент будет размонтирован
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };

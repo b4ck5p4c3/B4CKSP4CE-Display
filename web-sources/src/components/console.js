@@ -1,4 +1,4 @@
-import React, { useState, useImperativeHandle, forwardRef, useRef } from "react";
+import React, {forwardRef, useImperativeHandle, useRef, useState} from "react";
 import WebSocketService from "../services/websocket";
 
 const Console = forwardRef(({}, ref) => {
@@ -32,10 +32,10 @@ const Console = forwardRef(({}, ref) => {
 
     const addStd = (message) => {
         setStdMessages((prevMessages) => {
-            // Если сообщения приходят очень быстро, может понадобиться более явное разграничение
-            const updatedMessages = prevMessages.length >= 100 ? [...prevMessages.slice(1), { id: uniqueId(), message }] : [...prevMessages, { id: uniqueId(), message }];
-            console.log(updatedMessages);
-            return updatedMessages;
+            return prevMessages.length >= 100 ? [...prevMessages.slice(1), {
+                id: uniqueId(),
+                message
+            }] : [...prevMessages, {id: uniqueId(), message}];
             
         });
         scrollToBottom();

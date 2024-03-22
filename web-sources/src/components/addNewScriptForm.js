@@ -5,7 +5,7 @@ import RunIntervalSelector from './runInterval';
 const AddNewScriptForm = ({ onAddedEvent }) => {
     const [newScriptName, setNewScriptName] = useState('');
     const [newScriptDescription, setNewScriptDescription] = useState('');
-    const [newScriptRunInterval, setNewScriptRunInterval] = useState(50); // default value
+    const [newScriptRunInterval, setNewScriptRunInterval] = useState(50);
 
     const handleAddClick = () => {
         ScriptsAPI.create(newScriptName, newScriptDescription, "", newScriptRunInterval)

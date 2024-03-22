@@ -2,15 +2,13 @@ import React, { useRef, useEffect, useState } from 'react';
 
 const GridCanvas = ({ grid, cellSize, gapSize, onClick }) => {
     const canvasRef = useRef(null);
-    // Состояние для отслеживания, зажата ли кнопка мыши
     const [isMouseDown, setIsMouseDown] = useState(false);
 
-    // Отрисовка сетки на основе двумерного массива grid
     const drawGrid = (ctx) => {
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // Очистка перед перерисовкой
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         grid.forEach((row, y) => {
             row.forEach((cell, x) => {
-                ctx.fillStyle = cell ? '#ff0000' : '#ffffff'; // Красный если cell true, иначе белый
+                ctx.fillStyle = cell ? '#ff0000' : '#ffffff';
                 ctx.fillRect(
                     x * (cellSize + gapSize),
                     y * (cellSize + gapSize),
