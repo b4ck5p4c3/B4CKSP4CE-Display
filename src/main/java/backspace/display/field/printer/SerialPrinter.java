@@ -29,6 +29,9 @@ public class SerialPrinter implements FieldPrinter {
 
     private final File portFile;
 
+    private final int displayWidth;
+    private final int displayHeight;
+
 
     private static final int MAX_BUFFER_SIZE = 600;
 
@@ -38,10 +41,14 @@ public class SerialPrinter implements FieldPrinter {
                          @Value("${display.printer.serial.dataBits}") Integer dataBits,
                          @Value("${display.printer.serial.stopBits}") Integer stopBits,
                          @Value("${display.printer.serial.parity}") Integer parity,
-                         @Value("${display.block.count}") Integer blockCount,
-                         @Value("${display.block.size}") Integer blockSize) {
+                         @Value("${display.printer.serial.block.count}") Integer blockCount,
+                         @Value("${display.printer.serial.block.size}") Integer blockSize,
+                         int displayWidth,
+                         int displayHeight) {
         this.blockCount = blockCount;
         this.blockSize = blockSize;
+        this.displayWidth = displayWidth;
+        this.displayHeight = displayHeight;
         portFile = new File(portName);
         this.executorService = Executors.newScheduledThreadPool(1);
         selectPort(portName, baudRate, dataBits, stopBits, parity);
@@ -66,8 +73,10 @@ public class SerialPrinter implements FieldPrinter {
             @Value("${display.printer.serial.stopBits}") Integer stopBits,
             @Value("${display.printer.serial.parity}") Integer parity,
             @Value("${display.block.count}") Integer blockCount,
-            @Value("${display.block.size}") Integer blockSize) {
-        this(findPort(), baudRate, dataBits, stopBits, parity, blockCount, blockSize);
+            @Value("${display.block.size}") Integer blockSize,
+            int displayWidth,
+            int displayHeight) {
+        this(findPort(), baudRate, dataBits, stopBits, parity, blockCount, blockSize, displayWidth, displayHeight);
     }
 
     @SneakyThrows
@@ -116,8 +125,8 @@ public class SerialPrinter implements FieldPrinter {
             return;
         }
         byte[][] bits = new byte[blockCount][blockSize];
-        for (int width = 0; width < 40; width++) {
-            for (int height = 0; height < 32; height++) {
+        for (int width = 0; width < displayWidth; width++) {
+            for (int height = 0; height < displayHeight; height++) {
                 Point point = new Point(width, height);
                 byte brightness = frame.getPixelBrightness(point);
                 int x_bit = 7 - width % 8;

@@ -1,6 +1,5 @@
-import React, { useRef, useImperativeHandle, forwardRef, useState } from "react";
+import React, {forwardRef, useImperativeHandle, useState} from "react";
 import MonacoEditor from 'react-monaco-editor';
-import Console from "./console";
 import RunIntervalSelector from "./runInterval";
 
 const CodeEditor = forwardRef(({ runInterval, script,  saveEventHandler, runEventHandler}, ref) => {

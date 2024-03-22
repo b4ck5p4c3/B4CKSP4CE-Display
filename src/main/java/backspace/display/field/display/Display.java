@@ -57,7 +57,7 @@ public abstract class Display {
     }
 
     public void activate() {
-        log.info("Activating display {}", this.getClass().getSimpleName());
+        log.debug("Activating display {}", this.getClass().getSimpleName());
         if (runningDisplay == this) {
             return;
         }

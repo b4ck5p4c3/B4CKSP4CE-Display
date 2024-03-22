@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import ScriptCard from "./script";
 import FrameCard from "./frameCard";
 import FramesAPI from "../services/framesAPI";
 import DangerModal from "./dangerModal";

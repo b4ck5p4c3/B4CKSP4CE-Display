@@ -5,6 +5,7 @@ import backspace.display.script.Script;
 import backspace.display.script.ScriptRunnerDisplay;
 import backspace.display.service.repo.Repository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,12 +13,14 @@ import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
+@Log4j2
 public class ScriptService {
     private final ScriptRunnerDisplay scriptRunnerDisplay;
 
     private final Repository<Script> scriptRepository;
 
     public synchronized void runScript(String scriptId) {
+        log.info("Starting script {}", scriptId);
         Script script = scriptRepository.getById(scriptId);
         setScript(script);
     }

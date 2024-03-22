@@ -1,7 +1,7 @@
 import React from "react";
 import Grid from "./grid";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlay, faPencil, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faPencil, faPlay, faTrash} from "@fortawesome/free-solid-svg-icons";
 import FramesAPI from "../services/framesAPI";
 
 

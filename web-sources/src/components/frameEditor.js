@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from "react";
 import Grid from "./grid";
-import {faPaintBrush, faEraser} from "@fortawesome/free-solid-svg-icons";
+import {faEraser, faPaintBrush} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import getRandomName from "../hooks/randomNameGenerator";
 import FramesAPI from "../services/framesAPI";
-import DisplayAPI from "../services/displayAPI";
 
 
 function FrameEditor({enableSaving, gridData, setGridData,

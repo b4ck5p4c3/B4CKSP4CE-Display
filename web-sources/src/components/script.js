@@ -1,8 +1,8 @@
-import React, {useState, useRef} from "react";
+import React, {useRef, useState} from "react";
 import CodeEditor from "./codeEditor";
 import ScriptsAPI from "../services/scriptsAPI";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlay, faSave, faTrash } from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faPlay, faSave, faTrash} from '@fortawesome/free-solid-svg-icons'
 import Console from "./console";
 
 

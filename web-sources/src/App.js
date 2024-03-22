@@ -1,9 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import ScriptContainer from './components/scriptsContainer';
-import AddNewScriptForm from './components/addNewScriptForm';
-import useFetchScripts from './hooks/useFetchScripts';
+import React from 'react';
 import Scripts from "./pages/scripts";
-import {BrowserRouter, Route, Router, Routes} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Sidebar from "./components/sidebar";
 import Frames from "./pages/frames";
 

@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 import FrameEditor from "../components/frameEditor";
-import FrameCard from "../components/frameCard";
-import FramesAPI from "../services/framesAPI";
 import FramesContainer from "../components/framesContainer";
 import getRandomName from "../hooks/randomNameGenerator";
 import DisplayAPI from "../services/displayAPI";

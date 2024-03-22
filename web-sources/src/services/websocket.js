@@ -1,5 +1,5 @@
 import Backend from './apiConfig';
-import { Stomp } from '@stomp/stompjs';
+import {Stomp} from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 
 const WebSocketService = {

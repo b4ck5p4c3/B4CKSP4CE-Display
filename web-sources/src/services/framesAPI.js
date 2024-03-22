@@ -1,4 +1,4 @@
-import Backend, {fetchRequest, fetchNoResponse} from "./apiConfig";
+import Backend, {fetchNoResponse, fetchRequest} from "./apiConfig";
 
 function base64ToBytes(base64Strings) {
     return base64Strings.map(str => Uint8Array.from(atob(str), c => c.charCodeAt(0)));

@@ -1,6 +1,3 @@
-import React from "react";
-
-
 const getRandomName = () => {
     const adjectives = ["Red", "Green", "Blue", "Yellow", "Black", "White", "Orange", "Purple", "Pink", "Brown"];
     const nouns = ["Apple", "Banana", "Carrot", "Dog", "Elephant", "Fox", "Giraffe", "Horse", "Iguana", "Jellyfish"];

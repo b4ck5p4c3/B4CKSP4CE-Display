@@ -1,6 +1,3 @@
-import React from "react";
-
-
 const Backend = {
     autoSaveMinInterval: 30,
     baseUrl: 'http://127.0.0.1:8080/api',

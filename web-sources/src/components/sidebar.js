@@ -1,6 +1,7 @@
 import React from 'react';
-import {faHome, faCircle, faBraille, faCode, faEllipsisV} from '@fortawesome/free-solid-svg-icons';
+import {faBraille, faCode, faHome} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
 const Sidebar = () => (
     <nav className="navbar navbar-expand-sm bg-dark text-nowrap flex-row align-items-start flex-sm-column navbar-dark">
         <div className="container flex-sm-column">

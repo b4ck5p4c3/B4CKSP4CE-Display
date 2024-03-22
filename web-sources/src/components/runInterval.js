@@ -1,7 +1,6 @@
 import React from "react";
 
 
-
 const RunIntervalSelector = ({runInterval, setRunInterval}) => {
 
     const checkAndSetScriptRunInterval = (value) => {

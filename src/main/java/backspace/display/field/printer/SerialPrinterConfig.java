@@ -1,5 +1,6 @@
 package backspace.display.field.printer;
 
+import backspace.display.service.config.DisplayConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -17,11 +18,14 @@ public class SerialPrinterConfig {
                                                @Value("${display.printer.serial.stopBits}") Integer stopBits,
                                                @Value("${display.printer.serial.parity}") Integer parity,
                                                @Value("${display.block.count}") Integer blockCount,
-                                               @Value("${display.block.size}") Integer blockSize) {
+                                               @Value("${display.block.size}") Integer blockSize,
+                                               DisplayConfig displayConfig) {
         if (portName == null) {
-            return new SerialPrinter(baudRate, dataBits, stopBits, parity, blockCount, blockSize);
+            return new SerialPrinter(baudRate, dataBits, stopBits, parity, blockCount,
+                    blockSize, displayConfig.getWidth(), displayConfig.getHeight());
         } else {
-            return new SerialPrinter(portName, baudRate, dataBits, stopBits, parity, blockCount, blockSize);
+            return new SerialPrinter(portName, baudRate, dataBits, stopBits, parity, blockCount, blockSize,
+                     displayConfig.getWidth(), displayConfig.getHeight());
         }
     }
 

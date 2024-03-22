@@ -2,7 +2,6 @@ import AddNewScriptForm from "../components/addNewScriptForm";
 import ScriptContainer from "../components/scriptsContainer";
 import React, {useEffect, useState} from "react";
 import useFetchScripts from "../hooks/useFetchScripts";
-import Sidebar from "../components/sidebar";
 
 
 function Scripts() {

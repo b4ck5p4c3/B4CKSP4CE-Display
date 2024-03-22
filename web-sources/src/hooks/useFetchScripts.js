@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useEffect, useState} from 'react';
 import ScriptsAPI from '../services/scriptsAPI';
 
 export const useFetchScripts = () => {

@@ -1,8 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState} from 'react';
 import ScriptCard from "./script";
-import { useFetchScripts } from "../hooks/useFetchScripts";
-import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 import ScriptsAPI from '../services/scriptsAPI';
 import DangerModal from "./dangerModal";
 

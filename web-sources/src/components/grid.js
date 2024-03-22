@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 const GridCanvas = ({ grid, cellSize, gapSize, onClick }) => {
     const canvasRef = useRef(null);
