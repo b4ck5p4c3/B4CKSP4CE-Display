@@ -1,7 +1,18 @@
+
+function getPort(){
+    if (window.port === "%PORT%"){
+        return "8080";
+    } else {
+        return window.port;
+    }
+
+}
+const port = getPort();
+
 const Backend = {
     autoSaveMinInterval: 30,
-    baseUrl: 'http://127.0.0.1:8080/api',
-    websocketBase: 'http://127.0.0.1:8080/ws',
+    baseUrl: `http://127.0.0.1:${port}/api`,
+    websocketBase: `http://127.0.0.1:${port}/ws`,
     script:
       {
           create: () => `${Backend.baseUrl}/script`,

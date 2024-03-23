@@ -19,7 +19,7 @@ const Frames = () => {
         DisplayAPI.state().then(data => {
             setActiveFrame(data);
         });
-    });
+    }, []);
 
     const editEventHandler = (id, title, description, grid) => {
         setFrameName(title);
