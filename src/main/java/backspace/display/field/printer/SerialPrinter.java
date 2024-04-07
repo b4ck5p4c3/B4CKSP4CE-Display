@@ -63,7 +63,7 @@ public class SerialPrinter implements FieldPrinter {
                 log.info("Device restored. Reconnecting...");
                 selectPort(portName, baudRate, dataBits, stopBits, parity);
             }
-        }, 0, 50, java.util.concurrent.TimeUnit.MILLISECONDS);
+        }, 0, 150, java.util.concurrent.TimeUnit.MILLISECONDS);
     }
 
 

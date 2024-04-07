@@ -1,36 +1,29 @@
+const getBaseUrl = () => window.backend_url === "%BACKEND_URL%" ? "http://127.0.0.1:8080" : window.backend_url;
 
-function getPort(){
-    if (window.port === "%PORT%"){
-        return "8080";
-    } else {
-        return window.port;
-    }
 
-}
-const port = getPort();
-
+const baseUrl = getBaseUrl();
 const Backend = {
     autoSaveMinInterval: 30,
-    baseUrl: `http://127.0.0.1:${port}/api`,
-    websocketBase: `http://127.0.0.1:${port}/ws`,
+    baseApiUrl: `${baseUrl}/api`,
+    websocketBase: `${baseUrl}/ws`,
     script:
       {
-          create: () => `${Backend.baseUrl}/script`,
-          run: (scriptId) => `${Backend.baseUrl}/script/${scriptId}/run`,
-          update: (scriptId) => `${Backend.baseUrl}/script/${scriptId}`,
-          get: () => `${Backend.baseUrl}/script`,
-          active: () => `${Backend.baseUrl}/script/active`,
-          remove: (scriptId) => `${Backend.baseUrl}/script/${scriptId}`
+          create: () => `${Backend.baseApiUrl}/script`,
+          run: (scriptId) => `${Backend.baseApiUrl}/script/${scriptId}/run`,
+          update: (scriptId) => `${Backend.baseApiUrl}/script/${scriptId}`,
+          get: () => `${Backend.baseApiUrl}/script`,
+          active: () => `${Backend.baseApiUrl}/script/active`,
+          remove: (scriptId) => `${Backend.baseApiUrl}/script/${scriptId}`
       },
     frame: {
-        get: (offset, limit, title) => `${Backend.baseUrl}/frame?offset=${offset}&limit=${limit}&title=${title}`,
-        create:(activate) => `${Backend.baseUrl}/frame?activate=${activate}`,
-        activate: (id) => `${Backend.baseUrl}/frame/${id}/activate`,
-        remove: (id) => `${Backend.baseUrl}/frame/${id}`,
-        update: (id) => `${Backend.baseUrl}/frame/${id}`
+        get: (offset, limit, title) => `${Backend.baseApiUrl}/frame?offset=${offset}&limit=${limit}&title=${title}`,
+        create:(activate) => `${Backend.baseApiUrl}/frame?activate=${activate}`,
+        activate: (id) => `${Backend.baseApiUrl}/frame/${id}/activate`,
+        remove: (id) => `${Backend.baseApiUrl}/frame/${id}`,
+        update: (id) => `${Backend.baseApiUrl}/frame/${id}`
     },
     display: {
-        state: () => `${Backend.baseUrl}/display/state`
+        state: () => `${Backend.baseApiUrl}/display/state`
     },
   headers: {
         'Content-Type': 'application/json'

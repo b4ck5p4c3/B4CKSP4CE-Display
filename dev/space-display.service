@@ -1,0 +1,14 @@
+[Unit]
+Description=Space Display
+After=network.target
+
+[Service]
+User=radio
+Group=radio
+WorkingDirectory=/PATH/TO/WORKDIR/
+ExecStart=/usr/lib/jvm/java-17-openjdk/bin/java -jar /PATH/TO/WORKDIR/spaceDisplay.jar --data.path=data --display.printer.serial.port=/dev/serial/by-id/DISPLAY_ID --server.baseUrl=http://SERVER_URL:8080
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

@@ -53,3 +53,5 @@ package-lock.json
 package.json
 
 node/
+
+dev/deploy.sh

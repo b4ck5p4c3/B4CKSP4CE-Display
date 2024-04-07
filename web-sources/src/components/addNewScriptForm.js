@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import ScriptsAPI from '../services/framesAPI';
+import ScriptsAPI from '../services/scriptsAPI';
 import RunIntervalSelector from './runInterval';
 
 const AddNewScriptForm = ({ onAddedEvent }) => {
