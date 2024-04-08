@@ -9,7 +9,7 @@
   </a>
 </div>
 
-REST API for [B4CKSP4CE](https://0x08.in/) hackerspace LED display. Backend written using Spring Framework. Fronted written using React + node.js.
+REST API, Websocket & Lua interpreter for [B4CKSP4CE](https://0x08.in/) hackerspace LED display. Backend written using Spring Framework. Fronted written using React + node.js.
 
 Swagger available at `/swagger-ui/index.html`\
 To find the web panel `/`
