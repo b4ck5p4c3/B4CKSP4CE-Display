@@ -24,7 +24,7 @@ To find the web panel `/`
 
 `--server.port=8080` - API Port
 
-`--server.baseUrl=<URL>` - Space Display URL where available. Used for front configuration.
+`--server.baseUrl=<URL>` - Space Display URL where available. Used for frontend configuration. **Required if** you want use frontend
 
 `--display.default.scriptId=<UUID>` - UUID of default script. It starts on app boot 
 
