@@ -2,12 +2,15 @@
 <div align="center">
 <!-- Title: -->
   <h1>Space Display</h1>
+  <img src="https://github.com/b4ck5p4c3/B4CKSP4CE-Display/assets/23121394/39313426-e82f-4a4d-959c-629d4c285b75" height="300" alt="Preview"><br>
 <!-- Labels: -->
   <!-- First row: -->
   <a href="https://0x08.in">
     <img src="https://img.shields.io/badge/0x08.in-8A2BE2" height="20" alt="Build status">
   </a>
 </div>
+
+
 
 REST API, Websocket & Lua interpreter for [B4CKSP4CE](https://0x08.in/) hackerspace LED display. Backend written using Spring Framework. Fronted written using React + node.js.
 
