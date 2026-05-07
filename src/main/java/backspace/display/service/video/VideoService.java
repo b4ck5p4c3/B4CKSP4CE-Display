@@ -1,9 +1,11 @@
 package backspace.display.service.video;
 
+import backspace.display.field.display.Display;
 import backspace.display.service.config.DisplayConfig;
 import backspace.display.service.repo.Repository;
 import backspace.display.video.Video;
 import backspace.display.video.VideoPlayMode;
+import backspace.display.video.VideoRunnerDisplay;
 import backspace.display.video.VideoStatus;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
@@ -31,6 +33,7 @@ public class VideoService {
     private final VideoFileLayout layout;
     private final Transcoder transcoder;
     private final DisplayConfig displayConfig;
+    private final VideoRunnerDisplay videoRunnerDisplay;
 
     private final ExecutorService transcodeExecutor =
             Executors.newSingleThreadExecutor(r -> {
@@ -42,11 +45,13 @@ public class VideoService {
     public VideoService(Repository<VideoDbDto> videoRepository,
                         VideoFileLayout layout,
                         Transcoder transcoder,
-                        DisplayConfig displayConfig) {
+                        DisplayConfig displayConfig,
+                        VideoRunnerDisplay videoRunnerDisplay) {
         this.videoRepository = videoRepository;
         this.layout = layout;
         this.transcoder = transcoder;
         this.displayConfig = displayConfig;
+        this.videoRunnerDisplay = videoRunnerDisplay;
     }
 
     @PostConstruct
@@ -165,6 +170,35 @@ public class VideoService {
             log.warn("Failed to delete bin for video {}: {}", videoId, e.getMessage());
         }
         log.info("Deleted video id={}", videoId);
+    }
+
+    public synchronized Video runVideo(String videoId) {
+        Video video = getVideoById(videoId);
+        if (video.getStatus() != VideoStatus.READY) {
+            throw new IllegalStateException(
+                    "Video " + videoId + " is not READY (status=" + video.getStatus() + ")");
+        }
+        if (video.getFrameCount() <= 0) {
+            throw new IllegalStateException("Video " + videoId + " has no frames");
+        }
+        if (video.getWidth() != displayConfig.getWidth() || video.getHeight() != displayConfig.getHeight()) {
+            log.warn("Video {} was transcoded for {}x{} but display is {}x{}",
+                    videoId, video.getWidth(), video.getHeight(),
+                    displayConfig.getWidth(), displayConfig.getHeight());
+        }
+        Display previous = Display.getRunning();
+        if (previous == videoRunnerDisplay) {
+            previous = null;
+        }
+        videoRunnerDisplay.setVideo(video, layout.binFile(videoId), previous);
+        videoRunnerDisplay.activate();
+        log.info("Running video id={}", videoId);
+        return video;
+    }
+
+    public Video getActiveVideo() {
+        if (!videoRunnerDisplay.isRunning()) return null;
+        return videoRunnerDisplay.getFieldWriter().getVideo();
     }
 
     Video save(Video video) {

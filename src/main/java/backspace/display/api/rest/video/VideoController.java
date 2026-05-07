@@ -51,6 +51,18 @@ public class VideoController {
         return modelMapper.map(video, VideoDto.class);
     }
 
+    @PostMapping("{videoId}/run")
+    public VideoDto runVideo(@PathVariable(name = "videoId") String videoId) {
+        Video video = videoService.runVideo(videoId);
+        return modelMapper.map(video, VideoDto.class);
+    }
+
+    @GetMapping("active")
+    public VideoDto getActiveVideo() {
+        Video video = videoService.getActiveVideo();
+        return video == null ? null : modelMapper.map(video, VideoDto.class);
+    }
+
     @GetMapping
     public List<VideoDto> getAllVideos() {
         return videoService.getAllVideos().stream()
