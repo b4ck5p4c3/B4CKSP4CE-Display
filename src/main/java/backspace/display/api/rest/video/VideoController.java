@@ -1,5 +1,7 @@
 package backspace.display.api.rest.video;
 
+import backspace.display.api.rest.frame.FrameDto;
+import backspace.display.field.Frame;
 import backspace.display.service.video.VideoCreationRequest;
 import backspace.display.service.video.VideoService;
 import backspace.display.video.Video;
@@ -61,6 +63,13 @@ public class VideoController {
     public VideoDto getActiveVideo() {
         Video video = videoService.getActiveVideo();
         return video == null ? null : modelMapper.map(video, VideoDto.class);
+    }
+
+    @GetMapping("{videoId}/preview/{frameIdx}")
+    public FrameDto getPreviewFrame(@PathVariable(name = "videoId") String videoId,
+                                    @PathVariable(name = "frameIdx") long frameIdx) {
+        Frame frame = videoService.getPreviewFrame(videoId, frameIdx);
+        return modelMapper.map(frame, FrameDto.class);
     }
 
     @GetMapping

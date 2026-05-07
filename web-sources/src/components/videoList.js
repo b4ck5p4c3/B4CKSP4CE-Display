@@ -2,6 +2,8 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlay, faTrash, faRotate} from '@fortawesome/free-solid-svg-icons';
 import VideoAPI from '../services/videoAPI';
+import VideoThumbnail from './videoThumbnail';
+import VideoScrubberModal from './videoScrubberModal';
 
 const POLL_MS = 1500;
 
@@ -40,6 +42,7 @@ const StatusBadge = ({status, errorMessage}) => {
 
 const VideoList = ({videos, setVideos, activeVideoId, onActivated}) => {
     const [busyId, setBusyId] = useState(null);
+    const [previewVideo, setPreviewVideo] = useState(null);
     const pollRef = useRef(null);
 
     const refresh = useCallback(async () => {
@@ -100,6 +103,7 @@ const VideoList = ({videos, setVideos, activeVideoId, onActivated}) => {
             <table className="table table-sm align-middle">
                 <thead>
                 <tr>
+                    <th style={{width: '140px'}}>Preview</th>
                     <th>Name</th>
                     <th>Status</th>
                     <th>FPS</th>
@@ -113,6 +117,19 @@ const VideoList = ({videos, setVideos, activeVideoId, onActivated}) => {
                 <tbody>
                 {sorted.map(v => (
                     <tr key={v.id} className={v.id === activeVideoId ? 'table-success' : ''}>
+                        <td>
+                            {v.status === 'READY' && v.frameCount > 0 ? (
+                                <VideoThumbnail
+                                    videoId={v.id}
+                                    frameCount={v.frameCount}
+                                    frameIdx={0}
+                                    cellSize={3}
+                                    onClick={() => setPreviewVideo(v)}
+                                />
+                            ) : (
+                                <span className="text-muted small">—</span>
+                            )}
+                        </td>
                         <td>
                             <div className="fw-semibold">{v.name || <span className="text-muted">unnamed</span>}</div>
                             {v.originalFilename && (
@@ -147,6 +164,9 @@ const VideoList = ({videos, setVideos, activeVideoId, onActivated}) => {
                 ))}
                 </tbody>
             </table>
+            {previewVideo && (
+                <VideoScrubberModal video={previewVideo} onClose={() => setPreviewVideo(null)}/>
+            )}
         </div>
     );
 };

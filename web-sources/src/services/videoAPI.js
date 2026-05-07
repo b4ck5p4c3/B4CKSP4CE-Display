@@ -19,6 +19,9 @@ const VideoAPI = {
     remove: async (videoId) => {
         return await fetchNoResponse(Backend.video.remove(videoId), 'DELETE');
     },
+    preview: async (videoId, frameIdx) => {
+        return await fetchRequest(Backend.video.preview(videoId, frameIdx), 'GET');
+    },
     upload: ({file, name, description, fps, threshold, playMode, onProgress}) => {
         const form = new FormData();
         form.append('file', file);

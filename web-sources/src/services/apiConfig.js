@@ -32,7 +32,8 @@ const Backend = {
         update: (videoId) => `${Backend.baseApiUrl}/video/${videoId}`,
         run: (videoId) => `${Backend.baseApiUrl}/video/${videoId}/run`,
         active: () => `${Backend.baseApiUrl}/video/active`,
-        remove: (videoId) => `${Backend.baseApiUrl}/video/${videoId}`
+        remove: (videoId) => `${Backend.baseApiUrl}/video/${videoId}`,
+        preview: (videoId, frameIdx) => `${Backend.baseApiUrl}/video/${videoId}/preview/${frameIdx}`
     },
   headers: {
         'Content-Type': 'application/json'

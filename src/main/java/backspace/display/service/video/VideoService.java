@@ -1,5 +1,6 @@
 package backspace.display.service.video;
 
+import backspace.display.field.Frame;
 import backspace.display.field.display.Display;
 import backspace.display.service.config.DisplayConfig;
 import backspace.display.service.repo.Repository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -199,6 +201,36 @@ public class VideoService {
     public Video getActiveVideo() {
         if (!videoRunnerDisplay.isRunning()) return null;
         return videoRunnerDisplay.getFieldWriter().getVideo();
+    }
+
+    public Frame getPreviewFrame(String videoId, long frameIndex) {
+        Video video = getVideoById(videoId);
+        if (video.getStatus() != VideoStatus.READY) {
+            throw new IllegalStateException(
+                    "Video " + videoId + " is not READY (status=" + video.getStatus() + ")");
+        }
+        if (frameIndex < 0 || frameIndex >= video.getFrameCount()) {
+            throw new IllegalArgumentException(
+                    "frameIndex " + frameIndex + " out of range [0, " + video.getFrameCount() + ")");
+        }
+        int width = video.getWidth();
+        int height = video.getHeight();
+        int frameSize = width * height;
+        byte[] buf = new byte[frameSize];
+        Path bin = layout.binFile(videoId);
+        try (RandomAccessFile raf = new RandomAccessFile(bin.toFile(), "r")) {
+            raf.seek((long) frameIndex * frameSize);
+            raf.readFully(buf);
+        } catch (IOException e) {
+            throw new UncheckedIOException("Failed to read frame " + frameIndex + " of " + videoId, e);
+        }
+        byte[][] grid = new byte[height][width];
+        for (int y = 0; y < height; y++) {
+            System.arraycopy(buf, y * width, grid[y], 0, width);
+        }
+        Frame frame = new Frame(video.getName(), video.getDescription(), grid);
+        frame.setId(video.getId());
+        return frame;
     }
 
     Video save(Video video) {
