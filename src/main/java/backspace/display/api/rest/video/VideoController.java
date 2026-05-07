@@ -3,8 +3,10 @@ package backspace.display.api.rest.video;
 import backspace.display.service.video.VideoCreationRequest;
 import backspace.display.service.video.VideoService;
 import backspace.display.video.Video;
+import backspace.display.video.VideoPlayMode;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,7 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,6 +31,23 @@ public class VideoController {
     @PostMapping
     public VideoDto createVideo(@RequestBody VideoCreationRequestDto request) {
         Video video = videoService.createVideo(modelMapper.map(request, VideoCreationRequest.class));
+        return modelMapper.map(video, VideoDto.class);
+    }
+
+    @PostMapping(path = "upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public VideoDto uploadVideo(@RequestParam("file") MultipartFile file,
+                                @RequestParam(value = "name", required = false) String name,
+                                @RequestParam(value = "description", required = false) String description,
+                                @RequestParam(value = "fps", required = false) Integer fps,
+                                @RequestParam(value = "threshold", required = false) Integer threshold,
+                                @RequestParam(value = "playMode", required = false) VideoPlayMode playMode) {
+        VideoCreationRequest request = new VideoCreationRequest();
+        request.setName(name);
+        request.setDescription(description);
+        request.setFps(fps);
+        request.setThreshold(threshold);
+        request.setPlayMode(playMode);
+        Video video = videoService.uploadAndTranscode(file, request);
         return modelMapper.map(video, VideoDto.class);
     }
 
