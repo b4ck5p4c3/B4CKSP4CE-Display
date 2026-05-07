@@ -122,6 +122,14 @@ check-java:
 check-node:
 	@command -v $(NPM) >/dev/null 2>&1 || { echo "Ошибка: npm не найден в PATH"; exit 1; }
 
+check-ffmpeg: ## Проверить наличие ffmpeg (нужен для загрузки видео)
+	@if command -v ffmpeg >/dev/null 2>&1; then \
+		echo "ffmpeg: $$(ffmpeg -version 2>&1 | head -1)"; \
+	else \
+		echo "Предупреждение: ffmpeg не найден в PATH — функция Video не будет работать."; \
+		echo "Установка: sudo apt install ffmpeg"; \
+	fi
+
 # ---- Утилиты ---------------------------------------------------------------
 
 detect-serial: ## Показать подключённые serial-устройства
