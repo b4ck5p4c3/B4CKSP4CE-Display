@@ -3,6 +3,7 @@ import Scripts from "./pages/scripts";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Sidebar from "./components/sidebar";
 import Frames from "./pages/frames";
+import Videos from "./pages/videos";
 import DisplayPreview from "./components/displayPreview";
 
 
@@ -24,6 +25,7 @@ function App() {
       </div>
       <Routes>
         <Route path="/scripts" element={<Scripts />} />
+        <Route path="/videos" element={<Videos />} />
         <Route path="/" element={<Frames />} />
       </Routes>
     </div>

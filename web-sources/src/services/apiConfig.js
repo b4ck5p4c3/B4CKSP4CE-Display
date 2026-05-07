@@ -25,6 +25,15 @@ const Backend = {
     display: {
         state: () => `${Backend.baseApiUrl}/display/state`
     },
+    video: {
+        list: () => `${Backend.baseApiUrl}/video`,
+        get: (videoId) => `${Backend.baseApiUrl}/video/${videoId}`,
+        upload: () => `${Backend.baseApiUrl}/video/upload`,
+        update: (videoId) => `${Backend.baseApiUrl}/video/${videoId}`,
+        run: (videoId) => `${Backend.baseApiUrl}/video/${videoId}/run`,
+        active: () => `${Backend.baseApiUrl}/video/active`,
+        remove: (videoId) => `${Backend.baseApiUrl}/video/${videoId}`
+    },
   headers: {
         'Content-Type': 'application/json'
     }

@@ -10,10 +10,12 @@ import java.nio.file.Paths;
 public class VideoFileLayout {
 
     private final Path videosDir;
+    private final Path binDir;
 
     public VideoFileLayout(@Value("${data.path}") String dataPath) {
         this.videosDir = Paths.get(dataPath, "videos");
-        this.videosDir.toFile().mkdirs();
+        this.binDir = Paths.get(dataPath, "video-frames");
+        this.binDir.toFile().mkdirs();
     }
 
     public Path videosDir() {
@@ -21,6 +23,6 @@ public class VideoFileLayout {
     }
 
     public Path binFile(String videoId) {
-        return videosDir.resolve(videoId + ".bin");
+        return binDir.resolve(videoId + ".bin");
     }
 }

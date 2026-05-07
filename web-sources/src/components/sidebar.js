@@ -1,5 +1,5 @@
 import React from 'react';
-import {faBraille, faCode, faHome} from '@fortawesome/free-solid-svg-icons';
+import {faBraille, faCode, faFilm, faHome} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const Sidebar = () => (
@@ -42,6 +42,19 @@ const Sidebar = () => (
                             <FontAwesomeIcon icon={faCode} size={"sm"}/>
                             <span className="d-inline-block d-sm-none d-md-inline-block ms-1">
                 Scripts
+              </span>
+                        </a>
+                    </li>
+                    <li
+                        className="nav-item"
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="right"
+                        title="Videos"
+                    >
+                        <a className="nav-link" href="/videos">
+                            <FontAwesomeIcon icon={faFilm} size={"sm"}/>
+                            <span className="d-inline-block d-sm-none d-md-inline-block ms-1">
+                Videos
               </span>
                         </a>
                     </li>

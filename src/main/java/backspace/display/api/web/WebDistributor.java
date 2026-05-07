@@ -24,7 +24,7 @@ public class WebDistributor {
     @Value("${server.baseUrl}")
     private String baseUrl;
 
-    @GetMapping(value = {"/", "/scripts"}, produces = MediaType.TEXT_HTML_VALUE)
+    @GetMapping(value = {"/", "/scripts", "/videos"}, produces = MediaType.TEXT_HTML_VALUE)
     public String index() throws IOException {
         String content = readStaticFile("index.html");
         content = content.replace("%BACKEND_URL%", baseUrl);
