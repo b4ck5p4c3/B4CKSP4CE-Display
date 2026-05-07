@@ -3,6 +3,7 @@ import Scripts from "./pages/scripts";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Sidebar from "./components/sidebar";
 import Frames from "./pages/frames";
+import DisplayPreview from "./components/displayPreview";
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
       </Routes>
     </div>
   </BrowserRouter>
+  <DisplayPreview />
 </div>
   );
 }
