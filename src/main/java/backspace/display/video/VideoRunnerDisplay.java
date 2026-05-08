@@ -34,7 +34,7 @@ public class VideoRunnerDisplay extends Display {
 
     public void setVideo(Video video, Path binFile, Display previous) {
         fieldWriter.setVideo(video, binFile);
-        if (previous != this) {
+        if (previous != null && previous != this) {
             this.previousDisplay = previous;
         }
         reverting.set(false);
