@@ -159,6 +159,12 @@ public class VideoService {
         if (request.getName() != null) video.setName(request.getName());
         if (request.getDescription() != null) video.setDescription(request.getDescription());
         if (request.getPlayMode() != null) video.setPlayMode(request.getPlayMode());
+        if (request.getFps() != null) {
+            if (request.getFps() <= 0) {
+                throw new IllegalArgumentException("fps must be > 0");
+            }
+            video.setFps(request.getFps());
+        }
         Video saved = save(video);
         log.info("Updated video id={}", saved.getId());
         return saved;

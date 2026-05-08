@@ -35,6 +35,10 @@ const FramesContainer = ({editEventHandler, frames, setFrames}) => {
             });
     }
 
+    const onFrameMetadataUpdated = (id, patch) => {
+        setFrames(frames.map(f => f.id === id ? {...f, ...patch} : f));
+    }
+
     const getFrameById = (id) => {
         return frames.find(frame => frame.id === id);
     }
@@ -60,6 +64,7 @@ const FramesContainer = ({editEventHandler, frames, setFrames}) => {
                             grid={item.gridBrightnesses}
                             editEventHandler={editEventHandler}
                             removeEventHandler={() => {onRemoveButtonClick(item.id)}}
+                            onMetadataUpdated={onFrameMetadataUpdated}
                         />
                     </li>
                 ))}

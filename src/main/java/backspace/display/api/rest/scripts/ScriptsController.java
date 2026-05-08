@@ -40,6 +40,13 @@ public class ScriptsController {
         return modelMapper.map(script, ScriptDto.class);
     }
 
+    @PutMapping("{scriptId}/metadata")
+    public ScriptDto updateScriptMetadata(@PathVariable(name = "scriptId") String scriptId,
+                                          @RequestBody ScriptMetadataUpdateRequest request) {
+        Script script = scriptService.updateScriptMetadata(scriptId, request.getName(), request.getDescription());
+        return modelMapper.map(script, ScriptDto.class);
+    }
+
     @DeleteMapping("{scriptId}")
     public void deleteScript(@PathVariable(name = "scriptId") String scriptId) {
         scriptService.deleteScript(scriptId);

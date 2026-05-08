@@ -1,9 +1,11 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlay, faTrash, faRotate} from '@fortawesome/free-solid-svg-icons';
+import {faPlay, faTrash, faRotate, faPencil} from '@fortawesome/free-solid-svg-icons';
 import VideoAPI from '../services/videoAPI';
 import VideoThumbnail from './videoThumbnail';
 import VideoScrubberModal from './videoScrubberModal';
+import VideoEditModal from './videoEditModal';
+import CopyIdButton from './copyIdButton';
 
 const POLL_MS = 1500;
 
@@ -43,7 +45,13 @@ const StatusBadge = ({status, errorMessage}) => {
 const VideoList = ({videos, setVideos, activeVideoId, onActivated}) => {
     const [busyId, setBusyId] = useState(null);
     const [previewVideo, setPreviewVideo] = useState(null);
+    const [editVideo, setEditVideo] = useState(null);
     const pollRef = useRef(null);
+
+    const handleVideoSaved = (updated) => {
+        if (!updated || !updated.id) return;
+        setVideos(videos.map(v => v.id === updated.id ? {...v, ...updated} : v));
+    };
 
     const refresh = useCallback(async () => {
         const data = await VideoAPI.list();
@@ -111,7 +119,7 @@ const VideoList = ({videos, setVideos, activeVideoId, onActivated}) => {
                     <th>Duration</th>
                     <th>Size</th>
                     <th>Mode</th>
-                    <th style={{width: '160px'}}>Actions</th>
+                    <th style={{width: '210px'}}>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -152,6 +160,14 @@ const VideoList = ({videos, setVideos, activeVideoId, onActivated}) => {
                                 <FontAwesomeIcon icon={faPlay}/>
                             </button>
                             <button
+                                className="btn btn-sm btn-outline-primary me-1"
+                                onClick={() => setEditVideo(v)}
+                                title="Edit name / fps / mode"
+                            >
+                                <FontAwesomeIcon icon={faPencil}/>
+                            </button>
+                            <CopyIdButton id={v.id} className="me-1" title="Copy video id"/>
+                            <button
                                 className="btn btn-sm btn-outline-danger"
                                 disabled={busyId === v.id}
                                 onClick={() => handleRemove(v.id)}
@@ -166,6 +182,13 @@ const VideoList = ({videos, setVideos, activeVideoId, onActivated}) => {
             </table>
             {previewVideo && (
                 <VideoScrubberModal video={previewVideo} onClose={() => setPreviewVideo(null)}/>
+            )}
+            {editVideo && (
+                <VideoEditModal
+                    video={editVideo}
+                    onClose={() => setEditVideo(null)}
+                    onSaved={handleVideoSaved}
+                />
             )}
         </div>
     );

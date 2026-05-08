@@ -11,6 +11,7 @@ const Backend = {
           create: () => `${Backend.baseApiUrl}/script`,
           run: (scriptId) => `${Backend.baseApiUrl}/script/${scriptId}/run`,
           update: (scriptId) => `${Backend.baseApiUrl}/script/${scriptId}`,
+          updateMetadata: (scriptId) => `${Backend.baseApiUrl}/script/${scriptId}/metadata`,
           get: () => `${Backend.baseApiUrl}/script`,
           active: () => `${Backend.baseApiUrl}/script/active`,
           remove: (scriptId) => `${Backend.baseApiUrl}/script/${scriptId}`
@@ -20,7 +21,8 @@ const Backend = {
         create:(activate) => `${Backend.baseApiUrl}/frame?activate=${activate}`,
         activate: (id) => `${Backend.baseApiUrl}/frame/${id}/activate`,
         remove: (id) => `${Backend.baseApiUrl}/frame/${id}`,
-        update: (id) => `${Backend.baseApiUrl}/frame/${id}`
+        update: (id) => `${Backend.baseApiUrl}/frame/${id}`,
+        updateMetadata: (id) => `${Backend.baseApiUrl}/frame/${id}/metadata`
     },
     display: {
         state: () => `${Backend.baseApiUrl}/display/state`

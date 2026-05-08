@@ -15,6 +15,12 @@ const ScriptsAPI = {
     update: async (scriptId, script) => {
         return await fetchRequest(Backend.script.update(scriptId), 'PUT', script);
     },
+    updateMetadata: async (scriptId, {name, description}) => {
+        const body = {};
+        if (name !== undefined) body.name = name;
+        if (description !== undefined) body.description = description;
+        return await fetchRequest(Backend.script.updateMetadata(scriptId), 'PUT', body);
+    },
     get: async () => {
         return await fetchRequest(Backend.script.get(), 'GET');
     },

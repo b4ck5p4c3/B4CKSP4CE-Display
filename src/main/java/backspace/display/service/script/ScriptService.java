@@ -56,6 +56,15 @@ public class ScriptService {
         return script;
     }
 
+    public Script updateScriptMetadata(String scriptId, String name, String description) {
+        Script script = scriptRepository.getById(scriptId);
+        if (name != null) script.setName(name);
+        if (description != null) script.setDescription(description);
+        scriptRepository.update(script, script);
+        log.info("Updated script metadata id={}", scriptId);
+        return script;
+    }
+
 
     private void setScript(Script script) {
         scriptRunnerDisplay.activate();

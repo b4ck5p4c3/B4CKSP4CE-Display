@@ -43,6 +43,13 @@ public class    BaseFrameController {
         return modelMapper.map(frame, FrameDto.class);
     }
 
+    @PutMapping("/{frameId}/metadata")
+    public synchronized FrameDto updateFrameMetadata(@PathVariable("frameId") String frameId,
+                                                     @RequestBody FrameMetadataUpdateRequest request) {
+        Frame frame = frameController.updateFrameMetadata(frameId, request.getName(), request.getDescription());
+        return modelMapper.map(frame, FrameDto.class);
+    }
+
     @DeleteMapping("/{frameId}")
     public void deleteFrame(@PathVariable("frameId") String frameId) {
         frameController.deleteFrame(frameId);

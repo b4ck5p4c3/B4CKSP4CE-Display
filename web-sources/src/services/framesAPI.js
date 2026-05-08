@@ -28,6 +28,12 @@ const FramesAPI = {
     update: async (id, frame) => {
         return await fetchRequest(Backend.frame.update(id), 'PUT', prepareFrameForRequest(frame));
     },
+    updateMetadata: async (id, {name, description}) => {
+        const body = {};
+        if (name !== undefined) body.name = name;
+        if (description !== undefined) body.description = description;
+        return await fetchRequest(Backend.frame.updateMetadata(id), 'PUT', body);
+    },
     create: async (frame, activate = false) => {
         return await fetchRequest(Backend.frame.create(activate), 'POST', prepareFrameForRequest(frame));
     },

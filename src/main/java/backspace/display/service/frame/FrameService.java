@@ -93,5 +93,18 @@ public class FrameService {
         frameRepository.removeById(frameId);
     }
 
+    public Frame updateFrameMetadata(String frameId, String name, String description) {
+        Objects.requireNonNull(frameId, "Frame id cannot be null");
+        Frame frame = getFrameById(frameId);
+        if (name != null) frame.setName(name);
+        if (description != null) frame.setDescription(description);
+        Frame saved = saveFrame(frame);
+        log.info("Updated frame metadata id={}", saved.getId());
+        Frame activeFrame = display.getFrame();
+        if (activeFrame != null && activeFrame.getId() != null && activeFrame.getId().equals(frameId)) {
+            setActiveFrame(saved);
+        }
+        return saved;
+    }
 
 }

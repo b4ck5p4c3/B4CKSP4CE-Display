@@ -4,6 +4,7 @@ import ScriptsAPI from "../services/scriptsAPI";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlay, faSave, faTrash} from '@fortawesome/free-solid-svg-icons'
 import Console from "./console";
+import CopyIdButton from "./copyIdButton";
 
 
 const ScriptCard = ({ id, title, description, script, runInterval, onRemoveEvent }) => {
@@ -137,12 +138,13 @@ const ScriptCard = ({ id, title, description, script, runInterval, onRemoveEvent
               className={`btn btn-secondary ${saveButtonDisabled ? "disabled" : ""}`}
               type="button"
               name="saveScriptButton"
-              style={{ width: 40 }}
+              style={{ width: 40, marginBottom: 3 }}
               disabled={saveButtonDisabled}
               onClick={onSaveScript}
             >
               <FontAwesomeIcon icon={faSave} />
             </button>
+            <CopyIdButton id={id} size="md" title="Copy script id" style={{ width: 40 }} />
           </div>
           <div className="col">
             <div className="row">
