@@ -2,7 +2,7 @@
 FROM node:20-bookworm-slim AS frontend
 WORKDIR /app/web-sources
 COPY web-sources/package.json web-sources/package-lock.json ./
-RUN npm install -g npm@9 && npm ci
+RUN npm install --no-audit --no-fund
 COPY web-sources/ ./
 RUN npm run build
 
