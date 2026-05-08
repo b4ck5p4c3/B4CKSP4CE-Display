@@ -20,7 +20,9 @@ To find the web panel `/`
 ### Quick run 
 1. Download & install Java 17 ([link](https://www.oracle.com/java/technologies/downloads/#java17))
 2. Download latest release of Space Display
-3. `java -jar spaceDisplay.jar --data.path=data --display.printer.serial.port=/dev/serial/by-id/DISPLAY_ID --server.baseUrl=http://SERVER_URL:8080` (replace DISPLAY_ID with your device)
+3. `make run-console`
+    - `java -jar spaceDisplay.jar --data.path=data --display.printer.serial.port=/dev/serial/by-id/DISPLAY_ID --server.baseUrl=http://SERVER_URL:8080` (replace DISPLAY_ID with your device)
+
 
 
 ### Available parameters
