@@ -1,0 +1,17 @@
+services:
+  display:
+    build: .
+    image: spacedisplay:latest
+    container_name: spacedisplay
+    ports:
+      - "8080:8080"
+    environment:
+      DATA_PATH: /data
+      BASE_URL: http://localhost:8080
+      PRINTER: none
+      DISPLAY_WIDTH: "40"
+      DISPLAY_HEIGHT: "32"
+      JAVA_OPTS: "-Xmx1024m"
+    volumes:
+      - ./data:/data
+    restart: unless-stopped
