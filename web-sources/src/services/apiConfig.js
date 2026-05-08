@@ -52,6 +52,9 @@ const Backend = {
 
     try {
          const response = await fetch(url, options);
+         if (response.status === 204) {
+             return null;
+         }
          return await response.json();
      } catch (error) {
          return console.log(error);

@@ -4,10 +4,19 @@ import {faEye, faXmark, faGripLines} from "@fortawesome/free-solid-svg-icons";
 import GridCanvas from "./grid";
 import DisplayAPI from "../services/displayAPI";
 
-const POLL_INTERVAL_MS = 500;
+const DEFAULT_POLL_INTERVAL_MS = 500;
+const POLL_INTERVAL_MIN_MS = 50;
+const POLL_INTERVAL_MAX_MS = 2000;
+const POLL_INTERVAL_STEP_MS = 50;
 const STORAGE_KEY = 'displayPreview.pip';
 const PANEL_WIDTH = 360;
 const PANEL_MIN_HEIGHT = 200;
+
+const clampPollInterval = (v) => {
+    const n = Number(v);
+    if (!Number.isFinite(n)) return DEFAULT_POLL_INTERVAL_MS;
+    return Math.min(POLL_INTERVAL_MAX_MS, Math.max(POLL_INTERVAL_MIN_MS, Math.round(n)));
+};
 
 const decodeGrid = (base64Rows) => {
     if (!Array.isArray(base64Rows)) return [];
@@ -46,6 +55,9 @@ const DisplayPreview = () => {
     });
     const [frame, setFrame] = useState(null);
     const [error, setError] = useState(null);
+    const [pollInterval, setPollInterval] = useState(
+        () => clampPollInterval(persisted?.pollInterval ?? DEFAULT_POLL_INTERVAL_MS)
+    );
 
     const timerRef = useRef(null);
     const panelRef = useRef(null);
@@ -77,20 +89,20 @@ const DisplayPreview = () => {
             return;
         }
         fetchState();
-        timerRef.current = setInterval(fetchState, POLL_INTERVAL_MS);
+        timerRef.current = setInterval(fetchState, pollInterval);
         return () => {
             if (timerRef.current) {
                 clearInterval(timerRef.current);
                 timerRef.current = null;
             }
         };
-    }, [open, fetchState]);
+    }, [open, fetchState, pollInterval]);
 
     useEffect(() => {
         try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({open, pos}));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({open, pos, pollInterval}));
         } catch (e) { /* ignore quota */ }
-    }, [open, pos]);
+    }, [open, pos, pollInterval]);
 
     useEffect(() => {
         const onResize = () => {
@@ -210,8 +222,24 @@ const DisplayPreview = () => {
                                 <div className="text-muted py-4">Loading...</div>
                             )}
                         </div>
-                        <div className="text-muted text-center" style={{fontSize: '0.7rem', marginTop: '4px'}}>
-                            Polling {POLL_INTERVAL_MS} ms · drag header to move
+                        <div
+                            className="d-flex align-items-center gap-2 text-muted"
+                            style={{fontSize: '0.7rem', marginTop: '6px'}}
+                            onPointerDown={(e) => e.stopPropagation()}
+                        >
+                            <span>Poll</span>
+                            <input
+                                type="range"
+                                className="form-range flex-grow-1"
+                                min={POLL_INTERVAL_MIN_MS}
+                                max={POLL_INTERVAL_MAX_MS}
+                                step={POLL_INTERVAL_STEP_MS}
+                                value={pollInterval}
+                                onChange={(e) => setPollInterval(clampPollInterval(e.target.value))}
+                                title={`Polling interval: ${pollInterval} ms`}
+                                style={{height: '14px'}}
+                            />
+                            <span style={{minWidth: '52px', textAlign: 'right'}}>{pollInterval} ms</span>
                         </div>
                     </div>
                 </div>
