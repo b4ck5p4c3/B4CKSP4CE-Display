@@ -1,4 +1,4 @@
-const getBaseUrl = () => window.backend_url === "%BACKEND_URL%" ? "http://127.0.0.1:8080" : window.backend_url;
+const getBaseUrl = () => !window.backend_url ? window.location.origin : window.backend_url;
 
 
 const baseUrl = getBaseUrl();
